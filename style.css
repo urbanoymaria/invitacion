@@ -557,95 +557,42 @@ body{
 }
 
 /* =========================================================
-   AJUSTE SUAVE AUTOBÚS - SIN ROMPER DISEÑO
+   AUTOBÚS - COMPACTADO GLOBAL SIN ROMPER DISEÑO
    ========================================================= */
 
-   .busPageClean {
-    padding-top: 62px;
-    padding-bottom: 40px;
+   .page[data-page="autobus"] {
+    overflow: hidden;
   }
   
-  .busPageClean .busBlock {
-    margin-bottom: 16px;
+  .busPageFit {
+    transform: scale(0.88);
+    transform-origin: top center;
+    margin-top: 18px;
   }
   
-  .busPageClean .busRouteLabel {
-    margin-bottom: 12px;
-  }
-  
-  .busPageClean .busTitle {
-    margin-top: 8px;
-    margin-bottom: 14px;
-  }
-  
-  .busPageClean .busCard {
-    margin-bottom: 14px;
-  }
-  
-  .busPageClean .busMapLink {
-    margin-top: 2px;
-    margin-bottom: 18px;
-  }
-  
-  .busPageClean .busDivider {
-    margin-top: 12px;
-    margin-bottom: 14px;
-  }
-  
-  .busPageClean .placeTitle {
-    margin-top: 4px;
-    margin-bottom: 18px;
-  }
-  
-  .busPageClean .otrosRow {
-    margin-bottom: 0;
-  }
-  
-  /* Solo en móviles bajos: reducimos un poco sin deformar */
-  @media (max-height: 740px) {
-    .busPageClean {
-      padding-top: 48px;
-      padding-bottom: 28px;
-    }
-  
-    .busPageClean .busBlock {
-      margin-bottom: 10px;
-    }
-  
-    .busPageClean .busRouteLabel {
-      margin-bottom: 8px;
-    }
-  
-    .busPageClean .busTitle {
-      margin-top: 4px;
-      margin-bottom: 10px;
-      line-height: 0.95;
-    }
-  
-    .busPageClean .busCard {
-      padding-top: 10px;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-    }
-  
-    .busPageClean .busCardTime {
-      margin-top: 6px;
-    }
-  
-    .busPageClean .busMapIcon {
-      width: 42px;
-    }
-  
-    .busPageClean .busMapLink {
-      margin-bottom: 12px;
-    }
-  
-    .busPageClean .busDivider {
+  /* Móviles normales */
+  @media (max-width: 768px) {
+    .busPageFit {
+      transform: scale(0.84);
+      transform-origin: top center;
       margin-top: 8px;
-      margin-bottom: 8px;
     }
+  }
   
-    .busPageClean .placeTitle {
-      margin-bottom: 12px;
+  /* Móviles bajos */
+  @media (max-height: 740px) {
+    .busPageFit {
+      transform: scale(0.78);
+      transform-origin: top center;
+      margin-top: 2px;
+    }
+  }
+  
+  /* Móviles muy bajos */
+  @media (max-height: 670px) {
+    .busPageFit {
+      transform: scale(0.72);
+      transform-origin: top center;
+      margin-top: 0;
     }
   }
