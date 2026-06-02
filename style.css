@@ -597,6 +597,70 @@ body{
     }
   }
 
+  /* =========================================================
+   COLOR TEXTO GLOBAL - TODO EN NEGRO
+   ========================================================= */
+
+body,
+.app,
+.page,
+.page *,
+.menuOverlay,
+.menuOverlay *,
+.topbar,
+.topbar *,
+.logoText,
+.placeTitle,
+.busTitle,
+.busRouteLabel,
+.busCardTitle,
+.busCardSub,
+.busCardTime,
+.busCity,
+.busMapHint,
+.mapHint,
+.otrosLeft,
+.otrosRight,
+.otrosLink,
+.thanksText,
+.thanksIban,
+.timelineTitle,
+.timelineTime,
+.timelineEvent,
+.timelineContent {
+  color: #000 !important;
+}
+
+/* Enlaces también en negro */
+a,
+a:visited,
+a:hover,
+a:active {
+  color: #000 !important;
+}
+
+/* Iconos / textos pequeños */
+.giftHint,
+.giftText,
+.invHintHome {
+  color: #000 !important;
+}
+
+/* Si algún texto tenía opacidad baja */
+.timelineTime,
+.timelineEvent,
+.busCardTitle,
+.busCardSub,
+.busCardTime,
+.busCity,
+.mapHint,
+.busMapHint,
+.otrosLeft,
+.otrosRight,
+.otrosLink {
+  opacity: 1 !important;
+}
+
 
 /* =========================================================
    ITINERARIO EN HTML - CENTRADO REAL
