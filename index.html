@@ -3,7 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Urbano y María</title>
+<!-- =========================
+     VISTA PREVIA WHATSAPP / REDES
+     ========================= -->
+     <title>Urbano y María | Invitación de boda</title>
+     <meta name="description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
+     
+     <meta property="og:locale" content="es_ES" />
+     <meta property="og:site_name" content="Urbano y María" />
+     <meta property="og:title" content="Urbano y María | Invitación de boda" />
+     <meta property="og:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
+     <meta property="og:type" content="website" />
+     <meta property="og:url" content="https://urbano91.github.io/urbanoymaria/" />
+     
+     <!-- Imagen vertical que saldrá al compartir por WhatsApp -->
+     <meta property="og:image" content="https://urbano91.github.io/urbanoymaria/assets/IconoWhatsapp.png" />
+     <meta property="og:image:secure_url" content="https://urbano91.github.io/urbanoymaria/assets/IconoWhatsapp.png" />
+     <meta property="og:image:type" content="image/png" />
+     <meta property="og:image:width" content="1080" />
+     <meta property="og:image:height" content="1350" />
+     <meta property="og:image:alt" content="Invitación de boda de Urbano y María" />
+     
+     <meta name="twitter:card" content="summary_large_image" />
+     <meta name="twitter:title" content="Urbano y María | Invitación de boda" />
+     <meta name="twitter:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
+     <meta name="twitter:image" content="https://urbano91.github.io/urbanoymaria/assets/IconoWhatsapp.png" />
 
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
@@ -13,7 +37,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="style.css?v=8" />
+
+  <!-- Ocultar hint de portada a los 15 segundos -->
+  <style>
+    .invHintHome.is-hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+  </style>
 </head>
 
 <body>
@@ -250,7 +284,7 @@
     >
   </div>
 
-  <!-- ✅ OVERLAY SORPRESA -->
+  <!-- OVERLAY SORPRESA -->
   <div id="giftOverlay" class="giftOverlay" aria-hidden="true">
     <div class="giftCard" role="dialog" aria-label="Sorpresa">
       <img class="giftImg" src="assets/MarcoSanLorenzo.png" alt="Ejemplo enmarcado: Plaza de San Lorenzo" />
@@ -273,12 +307,31 @@
 
     let started = false;
 
+    // ========= HINT PORTADA 15 SEGUNDOS =========
+    const invHintHome = document.querySelector(".invHintHome");
+    let invHintTimer = null;
+
+    function showHomeHintFor15Seconds() {
+      if (!invHintHome) return;
+
+      clearTimeout(invHintTimer);
+
+      invHintHome.classList.remove("is-hidden");
+
+      invHintTimer = setTimeout(() => {
+        invHintHome.classList.add("is-hidden");
+      }, 15000);
+    }
+
     function showApp(){
       intro.style.display = "none";
       intro.classList.remove("fadeOut");
       app.classList.add("show");
       app.setAttribute("aria-hidden", "false");
       window.scrollTo(0,0);
+
+      // Empieza a contar los 15 segundos cuando aparece la portada
+      showHomeHintFor15Seconds();
     }
 
     function showIntro(){
@@ -287,6 +340,10 @@
       intro.style.display = "block";
       intro.classList.remove("fadeOut");
       started = false;
+
+      clearTimeout(invHintTimer);
+      if (invHintHome) invHintHome.classList.remove("is-hidden");
+
       try{
         introVideo.pause();
         introVideo.currentTime = 0;
@@ -339,6 +396,11 @@
         requestAnimationFrame(() => next.classList.add("is-visible"));
         active = target;
         window.scrollTo(0,0);
+
+        // Si vuelves a la portada, el aviso vuelve a durar 15 segundos
+        if (target === "inicio") {
+          showHomeHintFor15Seconds();
+        }
       }, 220);
     }
 
@@ -382,7 +444,7 @@
       invFull.addEventListener("touchstart", closeFull, { passive: false });
     }
 
-    // ========= SORPRESA (🎁) =========
+    // ========= SORPRESA =========
     const giftBtn = document.getElementById("giftBtn");
     const giftOverlay = document.getElementById("giftOverlay");
 
