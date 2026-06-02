@@ -835,3 +835,17 @@ a:active {
       font-size: clamp(19px, 4.6vw, 25px);
     }
   }
+
+  /* =========================================================
+   MENÚ OVERLAY EN BLANCO
+   ========================================================= */
+
+.menuOverlay,
+.menuOverlay * {
+  color: #fff !important;
+}
+
+.menuOverlay .menuLink,
+.menuOverlay .closeBtn {
+  color: #fff !important;
+}
