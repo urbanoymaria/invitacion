@@ -565,33 +565,33 @@ body{
   }
   
   .busPageFit {
-    transform: scale(0.88);
+    transform: scale(0.92);
     transform-origin: top center;
-    margin-top: 18px;
+    margin-top: 12px;
   }
   
   /* Móviles normales */
   @media (max-width: 768px) {
     .busPageFit {
-      transform: scale(0.84);
+      transform: scale(0.88);
       transform-origin: top center;
-      margin-top: 8px;
+      margin-top: 4px;
     }
   }
   
   /* Móviles bajos */
   @media (max-height: 740px) {
     .busPageFit {
-      transform: scale(0.78);
+      transform: scale(0.82);
       transform-origin: top center;
-      margin-top: 2px;
+      margin-top: 0;
     }
   }
   
   /* Móviles muy bajos */
   @media (max-height: 670px) {
     .busPageFit {
-      transform: scale(0.72);
+      transform: scale(0.76);
       transform-origin: top center;
       margin-top: 0;
     }
