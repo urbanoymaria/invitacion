@@ -557,151 +557,95 @@ body{
 }
 
 /* =========================================================
-   AUTOBÚS COMPACTO - AJUSTE PARA MÓVILES
+   AJUSTE SUAVE AUTOBÚS - SIN ROMPER DISEÑO
    ========================================================= */
 
-   .compactBus {
-    padding-top: 54px;
-    padding-bottom: 28px;
-    gap: 10px;
+   .busPageClean {
+    padding-top: 62px;
+    padding-bottom: 40px;
   }
   
-  .compactBus .busBlock {
-    margin: 0;
-    padding: 0;
+  .busPageClean .busBlock {
+    margin-bottom: 16px;
   }
   
-  .compactBus .busRouteLabel {
-    margin: 0 auto 8px;
-    font-size: 12px;
-    letter-spacing: 6px;
-    line-height: 1;
+  .busPageClean .busRouteLabel {
+    margin-bottom: 12px;
   }
   
-  .compactBus .busTitle {
-    margin: 8px 0 10px;
-    font-size: clamp(28px, 7vw, 42px);
-    line-height: 0.95;
-  }
-  
-  .compactBus .busCard {
-    width: min(360px, 82vw);
-    padding: 10px 16px;
-    margin: 0 auto 10px;
-    border-radius: 10px;
-  }
-  
-  .compactBus .busCardTitle,
-  .compactBus .busCardSub {
-    font-size: clamp(16px, 4vw, 22px);
-    line-height: 1.05;
-  }
-  
-  .compactBus .busCardTime {
-    font-size: clamp(22px, 5.4vw, 30px);
-    line-height: 1;
+  .busPageClean .busTitle {
     margin-top: 8px;
+    margin-bottom: 14px;
   }
   
-  .compactBus .busCardSmall {
-    padding: 12px 16px;
-    margin-bottom: 10px;
+  .busPageClean .busCard {
+    margin-bottom: 14px;
   }
   
-  .compactBus .busCity {
-    margin-top: 6px;
-    font-size: clamp(17px, 4.4vw, 24px);
-    line-height: 1;
-  }
-  
-  .compactBus .busMapLink {
-    margin: 0 auto 12px;
-  }
-  
-  .compactBus .busMapIcon {
-    width: 42px;
-    height: auto;
-  }
-  
-  .compactBus .busMapHint {
+  .busPageClean .busMapLink {
     margin-top: 2px;
-    font-size: 14px;
+    margin-bottom: 18px;
   }
   
-  .compactBus .busDivider {
-    margin: 8px auto 8px;
-    width: min(380px, 86vw);
+  .busPageClean .busDivider {
+    margin-top: 12px;
+    margin-bottom: 14px;
   }
   
-  .compactBus .busDivider i {
-    font-size: 16px;
+  .busPageClean .placeTitle {
+    margin-top: 4px;
+    margin-bottom: 18px;
   }
   
-  .compactBus .otrosTitle {
-    margin: 4px 0 14px;
-    font-size: clamp(34px, 8vw, 48px);
-    line-height: 0.9;
+  .busPageClean .otrosRow {
+    margin-bottom: 0;
   }
   
-  .compactBus .otrosRow {
-    width: min(320px, 80vw);
-    margin: 0 auto;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-  }
-  
-  .compactBus .otrosLeft,
-  .compactBus .otrosRight,
-  .compactBus .otrosLink {
-    font-size: clamp(15px, 4vw, 20px);
-    line-height: 1;
-  }
-  
-  .compactBus .onlyTaxi {
-    border: none;
-  }
-  
-  /* Móviles muy bajos */
+  /* Solo en móviles bajos: reducimos un poco sin deformar */
   @media (max-height: 740px) {
-    .compactBus {
-      padding-top: 44px;
-      gap: 6px;
+    .busPageClean {
+      padding-top: 48px;
+      padding-bottom: 28px;
     }
   
-    .compactBus .busTitle {
-      font-size: clamp(25px, 6.4vw, 36px);
-      margin: 6px 0 8px;
-    }
-  
-    .compactBus .busCard {
-      padding: 8px 14px;
-      margin-bottom: 8px;
-    }
-  
-    .compactBus .busCardTitle,
-    .compactBus .busCardSub {
-      font-size: clamp(14px, 3.6vw, 19px);
-    }
-  
-    .compactBus .busCardTime {
-      font-size: clamp(20px, 5vw, 27px);
-      margin-top: 6px;
-    }
-  
-    .compactBus .busMapIcon {
-      width: 36px;
-    }
-  
-    .compactBus .otrosTitle {
-      font-size: clamp(30px, 7vw, 40px);
+    .busPageClean .busBlock {
       margin-bottom: 10px;
     }
   
-    .compactBus .busDivider {
-      margin: 4px auto;
+    .busPageClean .busRouteLabel {
+      margin-bottom: 8px;
+    }
+  
+    .busPageClean .busTitle {
+      margin-top: 4px;
+      margin-bottom: 10px;
+      line-height: 0.95;
+    }
+  
+    .busPageClean .busCard {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+  
+    .busPageClean .busCardTime {
+      margin-top: 6px;
+    }
+  
+    .busPageClean .busMapIcon {
+      width: 42px;
+    }
+  
+    .busPageClean .busMapLink {
+      margin-bottom: 12px;
+    }
+  
+    .busPageClean .busDivider {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+  
+    .busPageClean .placeTitle {
+      margin-bottom: 12px;
     }
   }
-
