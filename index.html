@@ -3,640 +3,280 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- =========================
-     VISTA PREVIA WHATSAPP / REDES
-     ========================= -->
-<!-- Vista previa WhatsApp / redes -->
-<title>Urbano y María | 12/09/2026</title>
-<meta name="description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-
-<link rel="canonical" href="https://urbanoymaria.github.io/invitacion/" />
-
-<meta property="og:locale" content="es_ES" />
-<meta property="og:site_name" content="Urbano y María" />
-<meta property="og:title" content="Urbano y María | 12/09/2026" />
-<meta property="og:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://urbanoymaria.github.io/invitacion/" />
-
-<meta property="og:image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
-<meta property="og:image:url" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
-<meta property="og:image:secure_url" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
-<meta property="og:image:type" content="image/jpeg" />
-<meta property="og:image:width" content="1122" />
-<meta property="og:image:height" content="1402" />
-<meta property="og:image:alt" content="Invitación de boda de Urbano y María" />
-
-<meta itemprop="name" content="Urbano y María | Invitación de boda" />
-<meta itemprop="description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-<meta itemprop="image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
-
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Urbano y María | Invitación de boda" />
-<meta name="twitter:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-<meta name="twitter:image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
-
-  <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="apple-touch-icon" href="assets/logo.png">
-
-  <!-- Parisienne -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css?v=8" />
-
-  <!-- Ocultar hint de portada a los 15 segundos -->
-  <style>
-    .invHintHome.is-hidden {
-      opacity: 0 !important;
-      visibility: hidden !important;
-      pointer-events: none !important;
-      transition: opacity 0.45s ease, visibility 0.45s ease;
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- INTRO: SOBRE -->
-  <div id="intro" class="intro" aria-label="Sobre de invitación">
-    <video
-      id="introVideo"
-      class="introVideo"
-      src="assets/Sobre.mp4"
-      playsinline
-      webkit-playsinline
-      muted
-      preload="auto"
-    ></video>
-
-    <!-- Pantalla inicial para que en iPhone no aparezca todo negro antes de tocar -->
-    <button id="introStartHint" class="introStartHint" type="button" aria-label="Abrir invitación">
-      <span class="introSeal">U&amp;M</span>
-      <span class="introNames">Urbano y María</span>
-      <span class="introText">Toca para abrir el sobre</span>
-    </button>
-  </div>
-
-  <!-- APP -->
-  <div id="app" class="app" aria-hidden="true">
-
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <button id="menuBtn" class="iconBtn" aria-label="Menú" type="button">☰</button>
-      <div class="logoText">U&amp;M</div>
-
-      <button id="giftBtn" class="giftBtn" type="button" aria-label="Sorpresa">
-        <img src="assets/IconoRegalo.png" alt="" class="giftIcon">
-      </button>
-      <button id="replayBtn" class="replayBtn" type="button" aria-label="Ver el sobre otra vez">↻</button>
-    </header>
-
-    <!-- MENÚ OVERLAY -->
-    <div id="menuOverlay" class="menuOverlay" aria-hidden="true">
-      <button id="closeBtn" class="closeBtn" aria-label="Cerrar" type="button">✕</button>
-
-      <nav class="menuNav" aria-label="Navegación">
-        <button class="menuLink" data-page="inicio" type="button">Invitación</button>
-        <button class="menuLink" data-page="asistencia" type="button">Asistencia</button>
-        <button class="menuLink" data-page="ceremonia" type="button">Ceremonia</button>
-        <button class="menuLink" data-page="banquete" type="button">Banquete</button>
-        <button class="menuLink" data-page="autobus" type="button">Autobús</button>
-        <button class="menuLink" data-page="itinerario" type="button">Itinerario</button>
-        <button class="menuLink" data-page="agradecimiento" type="button">Agradecimiento</button>
-      </nav>
-    </div>
-
-    <main class="pages">
-
-      <!-- INICIO: PORTADA COMPLETA -->
-      <section class="page is-active is-visible" data-page="inicio">
-        <div class="homeFit">
-          <div class="invImageWrap">
-
-            <img
-              class="invImage"
-              src="assets/Invitacion.png"
-              alt="Invitación"
-              id="openInvFull"
-              draggable="false"
-            />
-
-            <!-- HINT SOLO EN LA PORTADA -->
-            <div class="invHintHome" aria-hidden="true">
-              Toca para ampliar la invitación
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <!-- ASISTENCIA (FORM EMBEBIDO) -->
-      <section class="page" data-page="asistencia">
-        <div class="formWrap">
-          <iframe
-            class="gform"
-            src="https://docs.google.com/forms/d/e/1FAIpQLSfeHvcNCgCbFV3fCGgnvcn0bBKmm-f4SxqXnwa47AQiINEIfg/viewform?embedded=true"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
-            loading="lazy"
-            title="Confirmación de asistencia"
-          ></iframe>
-        </div>
-      </section>
-
-      <!-- CEREMONIA -->
-      <section class="page" data-page="ceremonia">
-        <div class="placePage">
-          <div class="placeMedia">
-            <img class="placeImg" src="assets/Ceremonia.png" alt="Ceremonia">
-          </div>
-
-          <div class="placeInfo">
-            <h2 class="placeTitle">Parroquia San Lorenzo<br>Mártir</h2>
-
-            <a
-              class="mapLink"
-              href="https://www.google.com/maps/place/Parroquia+San+Lorenzo+M%C3%A1rtir/@37.3972877,-5.9966549,17z/data=!3m1!4b1!4m6!3m5!1s0xd126c092f59388d:0x5872d314a10f4389!8m2!3d37.3972877!4d-5.9966549!16s%2Fg%2F121b743b?entry=ttu"
-              target="_blank"
-              rel="noopener"
-              aria-label="Abrir ubicación en Google Maps"
-            >
-              <img class="mapIcon" src="assets/IconoMapa.png" alt="">
-              <div class="mapHint">(Clic)</div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- BANQUETE -->
-      <section class="page" data-page="banquete">
-        <div class="placePage">
-          <div class="placeMedia">
-            <img class="placeImg" src="assets/Banquete.png" alt="Banquete">
-          </div>
-
-          <div class="placeInfo">
-            <h2 class="placeTitle">Hacienda Los<br>Parrales</h2>
-
-            <a
-              class="mapLink"
-              href="https://maps.app.goo.gl/1y66pSW94DeNK1ky6"
-              target="_blank"
-              rel="noopener"
-              aria-label="Abrir ubicación en Google Maps"
-            >
-              <img class="mapIcon" src="assets/IconoMapa.png" alt="">
-              <div class="mapHint">(Clic)</div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-<!-- AUTOBÚS -->
-<section class="page" data-page="autobus">
-  <div class="busPage busPageFit">
-
-    <!-- IDA -->
-    <div class="busBlock">
-      <div class="busRouteLabel">Ida</div>
-
-      <h2 class="busTitle">Parroquia San Lorenzo<br>Mártir</h2>
-
-      <div class="busCard">
-        <div class="busCardTitle">Parada: Torneo</div>
-        <div class="busCardSub">(Salesianas San Vicente)</div>
-        <div class="busCardTime">19:00h</div>
-      </div>
-    </div>
-
-    <div class="busBlock">
-      <h2 class="busTitle">Hacienda Los Parrales</h2>
-
-      <a
-        class="busMapLink"
-        href="https://maps.app.goo.gl/1y66pSW94DeNK1ky6"
-        target="_blank"
-        rel="noopener"
-        aria-label="Abrir Hacienda Los Parrales en Google Maps"
-      >
-        <img class="busMapIcon" src="assets/IconoMapa.png" alt="">
-        <div class="busMapHint">(Clic)</div>
-      </a>
-    </div>
-
-    <!-- VUELTA -->
-    <div class="busBlock">
-      <div class="busRouteLabel">Vuelta</div>
-
-      <h2 class="busTitle">Hacienda Los Parrales</h2>
-
-      <div class="busCard">
-        <div class="busCardTime">05:00h</div>
-      </div>
-
-      <div class="busCity">Gines - Sevilla</div>
-    </div>
-
-    <div class="busDivider">
-      <span></span><i>∞</i><span></span>
-    </div>
-
-    <div class="busBlock">
-      <div class="busWrap">
-        <h2 class="placeTitle">Otros</h2>
-
-        <div class="otrosRow">
-          <div class="otrosLeft">Taxi Sanlúcar</div>
-          <div class="otrosRight">
-            <a class="otrosLink" href="tel:654110110">654 110 110</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-<!-- ITINERARIO -->
-<section class="page" data-page="itinerario">
-  <div class="timelinePage">
-    <h2 class="timelineTitle">Itinerario</h2>
-
-    <div class="timelineList">
-
-      <div class="timelineItem">
-        <div class="timelineIcon">⛪</div>
-        <div class="timelineContent">
-          <div class="timelineTime">17:00 h</div>
-          <div class="timelineEvent">Ceremonia</div>
-        </div>
-      </div>
-
-      <div class="timelineItem">
-        <div class="timelineIcon">🚌</div>
-        <div class="timelineContent">
-          <div class="timelineTime">19:00 h</div>
-          <div class="timelineEvent">Recogida</div>
-        </div>
-      </div>
-
-      <div class="timelineItem">
-        <div class="timelineIcon">🥂</div>
-        <div class="timelineContent">
-          <div class="timelineTime">20:00 h</div>
-          <div class="timelineEvent">Recepción</div>
-        </div>
-      </div>
-
-      <div class="timelineItem">
-        <div class="timelineIcon">🍽️</div>
-        <div class="timelineContent">
-          <div class="timelineTime">22:00 h</div>
-          <div class="timelineEvent">Cena</div>
-        </div>
-      </div>
-
-      <div class="timelineItem">
-        <div class="timelineIcon">🎶</div>
-        <div class="timelineContent">
-          <div class="timelineTime">00:00 h</div>
-          <div class="timelineEvent">Baile</div>
-        </div>
-      </div>
-
-      <div class="timelineItem">
-        <div class="timelineIcon">🚕</div>
-        <div class="timelineContent">
-          <div class="timelineTime">05:00 h</div>
-          <div class="timelineEvent">Fin de fiesta</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-      <!-- AGRADECIMIENTO -->
-      <section class="page" data-page="agradecimiento">
-        <div class="thanksWrap">
-          <p class="thanksText">¡Para nosotros lo más importante es tu presencia!</p>
-
-          <p class="thanksText">
-            Pero si deseas tener un detalle con nosotros, puedes hacerlo en la siguiente cuenta bancaria
-          </p>
-
-          <p class="thanksIban">
-            ES55 0081 0265 9900 0226 7630
-          </p>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- OVERLAY FULLSCREEN INVITACIÓN -->
-  <div id="invFull" class="invFull" aria-hidden="true">
-    <img
-      id="invFullImg"
-      src="assets/Invitacionhorizontal.png"
-      alt="Invitación horizontal"
-      class="invFullImg"
-      draggable="false"
-    >
-  </div>
-
-  <!-- OVERLAY SORPRESA -->
-  <div id="giftOverlay" class="giftOverlay" aria-hidden="true">
-    <div class="giftCard" role="dialog" aria-label="Sorpresa">
-      <img class="giftImg" src="assets/MarcoSanLorenzo.png" alt="Ejemplo enmarcado: Plaza de San Lorenzo" />
-
-      <div class="giftText">
-        La invitación física tiene detrás la <b>Plaza de San Lorenzo</b>.
-        <br>
-        Está pensada para que puedas <b>enmarcarla</b> y guardarla de recuerdo.
-      </div>
-
-      <div class="giftHint">Toca para cerrar</div>
-    </div>
-  </div>
-
   <script>
-  // ========= ALTURA REAL EN MÓVILES / iPHONE =========
-  function setRealViewportHeight() {
-    document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
-  }
+    // ========= DETECCIÓN iPHONE / iPAD =========
+    const isIOSDevice = document.documentElement.classList.contains("is-ios");
 
-  setRealViewportHeight();
-  window.addEventListener("resize", setRealViewportHeight);
-  window.addEventListener("orientationchange", () => {
-    setTimeout(setRealViewportHeight, 300);
-  });
-
-  // ========= INTRO SOBRE =========
-  const intro = document.getElementById("intro");
-  const introVideo = document.getElementById("introVideo");
-  const introStartHint = document.getElementById("introStartHint");
-  const app = document.getElementById("app");
-
-  let started = false;
-  let introFallbackTimer = null;
-
-  // ========= HINT PORTADA 15 SEGUNDOS =========
-  const invHintHome = document.querySelector(".invHintHome");
-  let invHintTimer = null;
-
-  function showHomeHintFor15Seconds() {
-    if (!invHintHome) return;
-
-    clearTimeout(invHintTimer);
-    invHintHome.classList.remove("is-hidden");
-
-    invHintTimer = setTimeout(() => {
-      invHintHome.classList.add("is-hidden");
-    }, 15000);
-  }
-
-  function showApp(){
-    clearTimeout(introFallbackTimer);
-
-    intro.style.display = "none";
-    intro.classList.remove("fadeOut");
-    intro.classList.remove("is-playing");
-
-    app.classList.add("show");
-    app.setAttribute("aria-hidden", "false");
+    // ========= ALTURA REAL EN MÓVILES =========
+    function setRealViewportHeight() {
+      document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
+    }
 
     setRealViewportHeight();
-    window.scrollTo(0,0);
-
-    showHomeHintFor15Seconds();
-  }
-
-  function showIntro(){
-    clearTimeout(introFallbackTimer);
-    clearTimeout(invHintTimer);
-
-    app.classList.remove("show");
-    app.setAttribute("aria-hidden", "true");
-
-    intro.style.display = "block";
-    intro.classList.remove("fadeOut");
-    intro.classList.remove("is-playing");
-
-    started = false;
-
-    if (invHintHome) invHintHome.classList.remove("is-hidden");
-
-    try{
-      introVideo.pause();
-      introVideo.currentTime = 0;
-    }catch(e){}
-  }
-
-  async function startIntro(e){
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    if (started) return;
-    started = true;
-
-    clearTimeout(introFallbackTimer);
-
-    intro.classList.add("is-playing");
-
-    // Fallback iPhone: si Safari no lanza el ended del vídeo, no se queda bloqueado.
-    const fallbackSeconds = Number.isFinite(introVideo.duration) && introVideo.duration > 0
-      ? Math.min(introVideo.duration + 1, 10)
-      : 7;
-
-    introFallbackTimer = setTimeout(() => {
-      intro.classList.add("fadeOut");
-      setTimeout(showApp, 520);
-    }, fallbackSeconds * 1000);
-
-    try {
-      introVideo.muted = true;
-      introVideo.setAttribute("muted", "");
-      introVideo.setAttribute("playsinline", "");
-      introVideo.setAttribute("webkit-playsinline", "");
-
-      introVideo.currentTime = 0;
-      await introVideo.play();
-    } catch (error) {
-      clearTimeout(introFallbackTimer);
-      intro.classList.add("fadeOut");
-      setTimeout(showApp, 520);
-    }
-  }
-
-  if (intro && introVideo) {
-    intro.addEventListener("click", startIntro, { passive: false });
-    intro.addEventListener("touchend", startIntro, { passive: false });
-
-    if (introStartHint) {
-      introStartHint.addEventListener("click", startIntro, { passive: false });
-      introStartHint.addEventListener("touchend", startIntro, { passive: false });
-    }
-
-    introVideo.addEventListener("ended", () => {
-      clearTimeout(introFallbackTimer);
-      intro.classList.add("fadeOut");
-      setTimeout(showApp, 520);
+    window.addEventListener("resize", setRealViewportHeight);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(setRealViewportHeight, 300);
     });
 
-    introVideo.addEventListener("error", () => {
+    // ========= INTRO SOBRE =========
+    const intro = document.getElementById("intro");
+    const introVideo = document.getElementById("introVideo");
+    const app = document.getElementById("app");
+
+    let started = false;
+    let introFallbackTimer = null;
+    let lastIntroStartAt = 0;
+
+    // ========= HINT PORTADA 15 SEGUNDOS =========
+    const invHintHome = document.querySelector(".invHintHome");
+    let invHintTimer = null;
+
+    function showHomeHintFor15Seconds() {
+      if (!invHintHome) return;
+
+      clearTimeout(invHintTimer);
+      invHintHome.classList.remove("is-hidden");
+
+      invHintTimer = setTimeout(() => {
+        invHintHome.classList.add("is-hidden");
+      }, 15000);
+    }
+
+    function showApp(){
       clearTimeout(introFallbackTimer);
-      intro.classList.add("fadeOut");
-      setTimeout(showApp, 520);
-    });
-  }
 
-  // ========= MENÚ =========
-  const menuBtn = document.getElementById("menuBtn");
-  const closeBtn = document.getElementById("closeBtn");
-  const menuOverlay = document.getElementById("menuOverlay");
+      if (intro) {
+        intro.style.display = "none";
+        intro.classList.remove("fadeOut");
+        intro.classList.remove("is-playing");
+      }
 
-  if (menuBtn && menuOverlay) {
-    menuBtn.addEventListener("click", () => menuOverlay.classList.add("show"));
-  }
+      if (app) {
+        app.classList.add("show");
+        app.setAttribute("aria-hidden", "false");
+      }
 
-  if (closeBtn && menuOverlay) {
-    closeBtn.addEventListener("click", () => menuOverlay.classList.remove("show"));
-  }
-
-  if (menuOverlay) {
-    menuOverlay.addEventListener("click", (e) => {
-      if (e.target === menuOverlay) menuOverlay.classList.remove("show");
-    });
-  }
-
-  // ========= PÁGINAS =========
-  const pages = Array.from(document.querySelectorAll(".page"));
-  let active = "inicio";
-
-  function getPage(name){ return pages.find(p => p.dataset.page === name); }
-
-  function setActive(target){
-    if (!target || target === active) return;
-
-    const current = getPage(active);
-    const next = getPage(target);
-
-    if (!current || !next) return;
-
-    current.classList.remove("is-visible");
-
-    setTimeout(() => {
-      current.classList.remove("is-active");
-      next.classList.add("is-active");
-
-      requestAnimationFrame(() => next.classList.add("is-visible"));
-
-      active = target;
       setRealViewportHeight();
       window.scrollTo(0,0);
+      showHomeHintFor15Seconds();
+    }
 
-      if (target === "inicio") {
-        showHomeHintFor15Seconds();
+    function showIntro(){
+      clearTimeout(introFallbackTimer);
+      clearTimeout(invHintTimer);
+
+      if (app) {
+        app.classList.remove("show");
+        app.setAttribute("aria-hidden", "true");
       }
-    }, 220);
-  }
 
-  document.querySelectorAll(".menuLink").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (menuOverlay) menuOverlay.classList.remove("show");
-      setActive(btn.dataset.page);
-    });
-  });
+      if (intro) {
+        intro.style.display = "block";
+        intro.classList.remove("fadeOut");
+        intro.classList.remove("is-playing");
+      }
 
-  // ========= REPLAY =========
-  const replayBtn = document.getElementById("replayBtn");
+      started = false;
 
-  if (replayBtn) {
-    replayBtn.addEventListener("click", () => {
-      if (menuOverlay) menuOverlay.classList.remove("show");
-      showIntro();
-    });
-  }
+      if (invHintHome) invHintHome.classList.remove("is-hidden");
 
-  // ========= INVITACIÓN FULLSCREEN ROBUSTA iPHONE =========
-  const openInv = document.getElementById("openInvFull");
-  const invFull = document.getElementById("invFull");
-  const invFullImg = document.getElementById("invFullImg");
-
-  let lastOpenedFullAt = 0;
-
-  function openFull(e){
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+      try{
+        introVideo.pause();
+        introVideo.currentTime = 0;
+      }catch(e){}
     }
 
-    if (!invFull) return;
+    async function startIntro(e){
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
 
-    lastOpenedFullAt = Date.now();
+      // Evita doble ejecución en iPhone por touch + click
+      const now = Date.now();
+      if (now - lastIntroStartAt < 450) return;
+      lastIntroStartAt = now;
 
-    invFull.classList.add("show");
-    invFull.setAttribute("aria-hidden", "false");
+      if (started) return;
+      started = true;
 
-    setRealViewportHeight();
-  }
+      if (intro) intro.classList.add("is-playing");
+      clearTimeout(introFallbackTimer);
 
-  function closeFull(e){
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+      // Fallback por si iPhone/Safari no lanza ended o el vídeo falla.
+      const duration = introVideo && Number.isFinite(introVideo.duration) && introVideo.duration > 0
+        ? introVideo.duration
+        : 7;
+
+      introFallbackTimer = setTimeout(() => {
+        if (intro) intro.classList.add("fadeOut");
+        setTimeout(showApp, 520);
+      }, Math.min((duration + 1) * 1000, 11000));
+
+      try {
+        if (introVideo) {
+          introVideo.muted = true;
+          introVideo.setAttribute("muted", "");
+          introVideo.setAttribute("playsinline", "");
+          introVideo.setAttribute("webkit-playsinline", "");
+          introVideo.currentTime = 0;
+          await introVideo.play();
+        } else {
+          showApp();
+        }
+      } catch (e) {
+        if (intro) intro.classList.add("fadeOut");
+        setTimeout(showApp, 520);
+      }
     }
 
-    // Evita que iPhone abra y cierre instantáneamente por doble evento touch/click.
-    if (Date.now() - lastOpenedFullAt < 450) return;
+    if (intro && introVideo) {
+      intro.addEventListener("click", startIntro, { passive: false });
+      intro.addEventListener("touchend", startIntro, { passive: false });
 
-    if (!invFull) return;
+      introVideo.addEventListener("ended", () => {
+        clearTimeout(introFallbackTimer);
+        intro.classList.add("fadeOut");
+        setTimeout(showApp, 520);
+      });
 
-    invFull.classList.remove("show");
-    invFull.setAttribute("aria-hidden", "true");
-  }
-
-  if (openInv && invFull) {
-    openInv.addEventListener("click", openFull, { passive: false });
-    openInv.addEventListener("touchend", openFull, { passive: false });
-
-    invFull.addEventListener("click", closeFull, { passive: false });
-    invFull.addEventListener("touchend", closeFull, { passive: false });
-
-    if (invFullImg) {
-      invFullImg.addEventListener("click", closeFull, { passive: false });
-      invFullImg.addEventListener("touchend", closeFull, { passive: false });
+      introVideo.addEventListener("error", () => {
+        clearTimeout(introFallbackTimer);
+        intro.classList.add("fadeOut");
+        setTimeout(showApp, 520);
+      });
     }
-  }
 
-  // ========= SORPRESA =========
-  const giftBtn = document.getElementById("giftBtn");
-  const giftOverlay = document.getElementById("giftOverlay");
+    // ========= MENÚ =========
+    const menuBtn = document.getElementById("menuBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const menuOverlay = document.getElementById("menuOverlay");
 
-  if (giftBtn && giftOverlay) {
-    giftBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    if (menuBtn && menuOverlay) {
+      menuBtn.addEventListener("click", () => menuOverlay.classList.add("show"));
+    }
 
-      giftOverlay.classList.add("show");
-      giftOverlay.setAttribute("aria-hidden", "false");
+    if (closeBtn && menuOverlay) {
+      closeBtn.addEventListener("click", () => menuOverlay.classList.remove("show"));
+    }
+
+    if (menuOverlay) {
+      menuOverlay.addEventListener("click", (e) => {
+        if (e.target === menuOverlay) menuOverlay.classList.remove("show");
+      });
+    }
+
+    // ========= PÁGINAS =========
+    const pages = Array.from(document.querySelectorAll(".page"));
+    let active = "inicio";
+
+    function getPage(name){ return pages.find(p => p.dataset.page === name); }
+
+    function setActive(target){
+      if (!target || target === active) return;
+      const current = getPage(active);
+      const next = getPage(target);
+      if (!current || !next) return;
+
+      current.classList.remove("is-visible");
+      setTimeout(() => {
+        current.classList.remove("is-active");
+        next.classList.add("is-active");
+        requestAnimationFrame(() => next.classList.add("is-visible"));
+        active = target;
+        setRealViewportHeight();
+        window.scrollTo(0,0);
+
+        if (target === "inicio") {
+          showHomeHintFor15Seconds();
+        }
+      }, 220);
+    }
+
+    document.querySelectorAll(".menuLink").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (menuOverlay) menuOverlay.classList.remove("show");
+        setActive(btn.dataset.page);
+      });
     });
 
-    giftOverlay.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    // ========= REPLAY =========
+    const replayBtn = document.getElementById("replayBtn");
+    if (replayBtn) {
+      replayBtn.addEventListener("click", () => {
+        if (menuOverlay) menuOverlay.classList.remove("show");
+        showIntro();
+      });
+    }
 
-      giftOverlay.classList.remove("show");
-      giftOverlay.setAttribute("aria-hidden", "true");
-    });
-  }
-</script>
+    // ========= INVITACIÓN FULLSCREEN ROBUSTA iPHONE =========
+    const openInv = document.getElementById("openInvFull");
+    const invFull = document.getElementById("invFull");
+    const invFullImg = document.getElementById("invFullImg");
+
+    let lastOpenedFullAt = 0;
+
+    function openFull(e){
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (!invFull) return;
+
+      lastOpenedFullAt = Date.now();
+      invFull.classList.add("show");
+      invFull.setAttribute("aria-hidden", "false");
+      setRealViewportHeight();
+    }
+
+    function closeFull(e){
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      // Evita que iPhone abra/cierre instantáneamente por doble evento
+      if (Date.now() - lastOpenedFullAt < 450) return;
+      if (!invFull) return;
+
+      invFull.classList.remove("show");
+      invFull.setAttribute("aria-hidden", "true");
+    }
+
+    if (openInv && invFull) {
+      openInv.addEventListener("click", openFull, { passive: false });
+      openInv.addEventListener("touchend", openFull, { passive: false });
+
+      invFull.addEventListener("click", closeFull, { passive: false });
+      invFull.addEventListener("touchend", closeFull, { passive: false });
+
+      if (invFullImg) {
+        invFullImg.addEventListener("click", closeFull, { passive: false });
+        invFullImg.addEventListener("touchend", closeFull, { passive: false });
+      }
+    }
+
+    // ========= SORPRESA =========
+    const giftBtn = document.getElementById("giftBtn");
+    const giftOverlay = document.getElementById("giftOverlay");
+
+    if (giftBtn && giftOverlay) {
+      giftBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        giftOverlay.classList.add("show");
+        giftOverlay.setAttribute("aria-hidden", "false");
+      });
+
+      giftOverlay.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        giftOverlay.classList.remove("show");
+        giftOverlay.setAttribute("aria-hidden", "true");
+      });
+    }
+  </script>
 
 </body>
 </html>
