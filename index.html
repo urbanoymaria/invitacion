@@ -3,13 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script>
-    (function(){
-      var ua = navigator.userAgent || navigator.vendor || window.opera || "";
-      var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-      if (isIOS) document.documentElement.classList.add("is-ios-device");
-    })();
-  </script>
 <!-- =========================
      VISTA PREVIA WHATSAPP / REDES
      ========================= -->
@@ -68,11 +61,6 @@
 
   <!-- INTRO: SOBRE -->
   <div id="intro" class="intro" aria-label="Sobre de invitación">
-    <div id="iosIntroPrompt" class="iosIntroPrompt" aria-hidden="true">
-      <div class="iosIntroTitle">Urbano y María</div>
-      <div class="iosIntroClick">Click</div>
-    </div>
-
     <video
       id="introVideo"
       class="introVideo"
@@ -82,6 +70,12 @@
       muted
       preload="auto"
     ></video>
+
+    <!-- Solo iPhone/iPad: evita pantalla negra antes de reproducir -->
+    <div id="iosIntroPrompt" class="iosIntroPrompt" aria-hidden="true">
+      <div class="iosIntroTitle">Urbano y María</div>
+      <div class="iosIntroClick">Click</div>
+    </div>
   </div>
 
   <!-- APP -->
@@ -369,314 +363,323 @@
   </div>
 
   <script>
-  // ========= DETECCIÓN iPHONE / iPAD =========
-  const ua = navigator.userAgent || navigator.vendor || window.opera || "";
-  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    // ========= DETECCIÓN IOS =========
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
-  if (isIOS) {
-    document.documentElement.classList.add("is-ios-device");
-  }
-
-  // ========= ALTURA REAL EN MÓVILES =========
-  function setRealViewportHeight() {
-    document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
-  }
-
-  setRealViewportHeight();
-  window.addEventListener("resize", setRealViewportHeight);
-  window.addEventListener("orientationchange", () => {
-    setTimeout(setRealViewportHeight, 300);
-  });
-
-  // ========= INTRO SOBRE =========
-  const intro = document.getElementById("intro");
-  const introVideo = document.getElementById("introVideo");
-  const app = document.getElementById("app");
-  const iosIntroPrompt = document.getElementById("iosIntroPrompt");
-
-  let started = false;
-  let introFallbackTimer = null;
-  let introPlayCheckTimer = null;
-
-  // ========= HINT PORTADA 15 SEGUNDOS =========
-  const invHintHome = document.querySelector(".invHintHome");
-  let invHintTimer = null;
-
-  function showHomeHintFor15Seconds() {
-    if (!invHintHome) return;
-
-    clearTimeout(invHintTimer);
-    invHintHome.classList.remove("is-hidden");
-
-    invHintTimer = setTimeout(() => {
-      invHintHome.classList.add("is-hidden");
-    }, 15000);
-  }
-
-  function showApp() {
-    clearTimeout(introFallbackTimer);
-    clearTimeout(introPlayCheckTimer);
-
-    if (intro) {
-      intro.style.display = "none";
-      intro.classList.remove("fadeOut");
-      intro.classList.remove("introStarted");
+    if (isIOS) {
+      document.documentElement.classList.add("is-ios");
     }
 
-    if (app) {
-      app.classList.add("show");
-      app.setAttribute("aria-hidden", "false");
+    // ========= ALTURA REAL EN MÓVILES =========
+    function setRealViewportHeight() {
+      document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
     }
 
     setRealViewportHeight();
-    window.scrollTo(0, 0);
-    showHomeHintFor15Seconds();
-  }
+    window.addEventListener("resize", setRealViewportHeight);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(setRealViewportHeight, 300);
+    });
 
-  function fadeToApp() {
-    if (!intro) return showApp();
-    intro.classList.add("fadeOut");
-    setTimeout(showApp, 520);
-  }
+    // ========= INTRO SOBRE =========
+    const intro = document.getElementById("intro");
+    const introVideo = document.getElementById("introVideo");
+    const app = document.getElementById("app");
+    const iosIntroPrompt = document.getElementById("iosIntroPrompt");
 
-  function showIntro() {
-    clearTimeout(introFallbackTimer);
-    clearTimeout(introPlayCheckTimer);
-    clearTimeout(invHintTimer);
+    let started = false;
+    let introFallbackTimer = null;
+    let iosPlayingSafetyTimer = null;
 
-    if (app) {
-      app.classList.remove("show");
-      app.setAttribute("aria-hidden", "true");
+    // ========= HINT PORTADA =========
+    const invHintHome = document.querySelector(".invHintHome");
+    let invHintTimer = null;
+
+    function showHomeHintFor15Seconds() {
+      if (!invHintHome) return;
+
+      clearTimeout(invHintTimer);
+      invHintHome.classList.remove("is-hidden");
+
+      invHintTimer = setTimeout(() => {
+        invHintHome.classList.add("is-hidden");
+      }, 15000);
     }
 
-    if (intro) {
-      intro.style.display = "block";
+    function showApp() {
+      clearTimeout(introFallbackTimer);
+      clearTimeout(iosPlayingSafetyTimer);
+
+      intro.style.display = "none";
       intro.classList.remove("fadeOut");
-      intro.classList.remove("introStarted");
-    }
 
-    started = false;
+      app.classList.add("show");
+      app.setAttribute("aria-hidden", "false");
 
-    if (invHintHome) invHintHome.classList.remove("is-hidden");
-
-    try {
-      introVideo.pause();
-      introVideo.currentTime = 0;
-    } catch (e) {}
-  }
-
-  async function startIntro(e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    if (started) return;
-    started = true;
-
-    clearTimeout(introFallbackTimer);
-    clearTimeout(introPlayCheckTimer);
-
-    if (intro) intro.classList.add("introStarted");
-
-    try {
-      introVideo.muted = true;
-      introVideo.setAttribute("muted", "");
-      introVideo.setAttribute("playsinline", "");
-      introVideo.setAttribute("webkit-playsinline", "");
-      introVideo.currentTime = 0;
-    } catch (e) {}
-
-    // Si en iPhone el vídeo no arranca, no dejamos una pantalla blanca/negra: pasamos a la invitación.
-    introPlayCheckTimer = setTimeout(() => {
-      if (isIOS && introVideo && (introVideo.paused || introVideo.readyState < 2)) {
-        fadeToApp();
-      }
-    }, 2500);
-
-    // Fallback general: aunque no llegue el evento ended, nunca dejamos al usuario bloqueado.
-    const duration = introVideo && Number.isFinite(introVideo.duration) && introVideo.duration > 0
-      ? introVideo.duration
-      : 7;
-
-    introFallbackTimer = setTimeout(() => {
-      fadeToApp();
-    }, Math.min((duration + 1) * 1000, 11000));
-
-    try {
-      await introVideo.play();
-    } catch (error) {
-      fadeToApp();
-    }
-  }
-
-  if (intro && introVideo) {
-    intro.addEventListener("click", startIntro, { passive: false });
-    intro.addEventListener("touchend", startIntro, { passive: false });
-    intro.addEventListener("pointerup", startIntro, { passive: false });
-
-    if (iosIntroPrompt) {
-      iosIntroPrompt.addEventListener("click", startIntro, { passive: false });
-      iosIntroPrompt.addEventListener("touchend", startIntro, { passive: false });
-      iosIntroPrompt.addEventListener("pointerup", startIntro, { passive: false });
-    }
-
-    introVideo.addEventListener("playing", () => {
-      clearTimeout(introPlayCheckTimer);
-    });
-
-    introVideo.addEventListener("ended", () => {
-      clearTimeout(introFallbackTimer);
-      clearTimeout(introPlayCheckTimer);
-      fadeToApp();
-    });
-
-    introVideo.addEventListener("error", () => {
-      clearTimeout(introFallbackTimer);
-      clearTimeout(introPlayCheckTimer);
-      fadeToApp();
-    });
-  }
-
-  // ========= MENÚ =========
-  const menuBtn = document.getElementById("menuBtn");
-  const closeBtn = document.getElementById("closeBtn");
-  const menuOverlay = document.getElementById("menuOverlay");
-
-  if (menuBtn && menuOverlay) {
-    menuBtn.addEventListener("click", () => menuOverlay.classList.add("show"));
-  }
-
-  if (closeBtn && menuOverlay) {
-    closeBtn.addEventListener("click", () => menuOverlay.classList.remove("show"));
-  }
-
-  if (menuOverlay) {
-    menuOverlay.addEventListener("click", (e) => {
-      if (e.target === menuOverlay) menuOverlay.classList.remove("show");
-    });
-  }
-
-  // ========= PÁGINAS =========
-  const pages = Array.from(document.querySelectorAll(".page"));
-  let active = "inicio";
-
-  function getPage(name) {
-    return pages.find(p => p.dataset.page === name);
-  }
-
-  function setActive(target) {
-    if (!target || target === active) return;
-
-    const current = getPage(active);
-    const next = getPage(target);
-
-    if (!current || !next) return;
-
-    current.classList.remove("is-visible");
-
-    setTimeout(() => {
-      current.classList.remove("is-active");
-      next.classList.add("is-active");
-
-      requestAnimationFrame(() => {
-        next.classList.add("is-visible");
-      });
-
-      active = target;
       setRealViewportHeight();
       window.scrollTo(0, 0);
 
-      if (target === "inicio") {
-        showHomeHintFor15Seconds();
+      showHomeHintFor15Seconds();
+    }
+
+    function fadeToApp() {
+      clearTimeout(introFallbackTimer);
+      clearTimeout(iosPlayingSafetyTimer);
+      intro.classList.add("fadeOut");
+      setTimeout(showApp, 520);
+    }
+
+    function showIntro() {
+      clearTimeout(introFallbackTimer);
+      clearTimeout(iosPlayingSafetyTimer);
+      clearTimeout(invHintTimer);
+
+      app.classList.remove("show");
+      app.setAttribute("aria-hidden", "true");
+
+      intro.style.display = "block";
+      intro.classList.remove("fadeOut");
+      intro.classList.remove("is-playing");
+
+      started = false;
+
+      if (iosIntroPrompt) {
+        iosIntroPrompt.classList.remove("is-hidden");
       }
-    }, 220);
-  }
 
-  document.querySelectorAll(".menuLink").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (menuOverlay) menuOverlay.classList.remove("show");
-      setActive(btn.dataset.page);
-    });
-  });
+      if (invHintHome) invHintHome.classList.remove("is-hidden");
 
-  // ========= REPLAY =========
-  const replayBtn = document.getElementById("replayBtn");
-
-  if (replayBtn) {
-    replayBtn.addEventListener("click", () => {
-      if (menuOverlay) menuOverlay.classList.remove("show");
-      showIntro();
-    });
-  }
-
-  // ========= INVITACIÓN FULLSCREEN =========
-  const openInv = document.getElementById("openInvFull");
-  const invFull = document.getElementById("invFull");
-  const invFullImg = document.getElementById("invFullImg");
-
-  let lastOpenedFullAt = 0;
-
-  function openFull(e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+      try {
+        introVideo.pause();
+        introVideo.currentTime = 0;
+      } catch (e) {}
     }
 
-    if (!invFull) return;
+    async function startIntro(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
 
-    lastOpenedFullAt = Date.now();
-    invFull.classList.add("show");
-    invFull.setAttribute("aria-hidden", "false");
-    setRealViewportHeight();
-  }
+      if (started) return;
+      started = true;
 
-  function closeFull(e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+      clearTimeout(introFallbackTimer);
+      clearTimeout(iosPlayingSafetyTimer);
+
+      try {
+        introVideo.muted = true;
+        introVideo.setAttribute("muted", "");
+        introVideo.setAttribute("playsinline", "");
+        introVideo.setAttribute("webkit-playsinline", "");
+        introVideo.currentTime = 0;
+      } catch (e) {}
+
+      // En iPhone mantenemos la pantalla "Urbano y María / Click" visible
+      // hasta que Safari confirme que el vídeo está reproduciendo. Así evitamos
+      // pantalla negra o sobre congelado.
+      if (isIOS && iosIntroPrompt) {
+        iosIntroPrompt.classList.remove("is-hidden");
+      }
+
+      try {
+        const playPromise = introVideo.play();
+        if (playPromise && typeof playPromise.then === "function") {
+          await playPromise;
+        }
+      } catch (error) {
+        // Si iPhone bloquea el vídeo, no dejamos la web rota.
+        // Se mantiene la pantalla bonita y pasamos a la invitación.
+        setTimeout(fadeToApp, 450);
+        return;
+      }
+
+      // Si no llega el evento "playing" en iPhone, no enseñamos negro.
+      // Pasamos a la invitación antes de que parezca roto.
+      if (isIOS) {
+        iosPlayingSafetyTimer = setTimeout(() => {
+          if (!intro.classList.contains("is-playing")) {
+            fadeToApp();
+          }
+        }, 1800);
+      }
+
+      const duration = Number.isFinite(introVideo.duration) && introVideo.duration > 0
+        ? introVideo.duration
+        : 6;
+
+      introFallbackTimer = setTimeout(() => {
+        fadeToApp();
+      }, Math.min((duration + 1) * 1000, 10000));
     }
 
-    if (Date.now() - lastOpenedFullAt < 450) return;
-    if (!invFull) return;
+    if (intro && introVideo) {
+      intro.addEventListener("click", startIntro, { passive: false });
+      intro.addEventListener("touchend", startIntro, { passive: false });
 
-    invFull.classList.remove("show");
-    invFull.setAttribute("aria-hidden", "true");
-  }
+      introVideo.addEventListener("playing", () => {
+        intro.classList.add("is-playing");
 
-  if (openInv && invFull) {
-    openInv.addEventListener("click", openFull, { passive: false });
-    openInv.addEventListener("touchend", openFull, { passive: false });
+        if (iosIntroPrompt) {
+          iosIntroPrompt.classList.add("is-hidden");
+        }
 
-    invFull.addEventListener("click", closeFull, { passive: false });
-    invFull.addEventListener("touchend", closeFull, { passive: false });
+        clearTimeout(iosPlayingSafetyTimer);
+      });
 
-    if (invFullImg) {
-      invFullImg.addEventListener("click", closeFull, { passive: false });
-      invFullImg.addEventListener("touchend", closeFull, { passive: false });
+      introVideo.addEventListener("ended", () => {
+        fadeToApp();
+      });
+
+      introVideo.addEventListener("error", () => {
+        fadeToApp();
+      });
     }
-  }
 
-  // ========= SORPRESA =========
-  const giftBtn = document.getElementById("giftBtn");
-  const giftOverlay = document.getElementById("giftOverlay");
+    // ========= MENÚ =========
+    const menuBtn = document.getElementById("menuBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const menuOverlay = document.getElementById("menuOverlay");
 
-  if (giftBtn && giftOverlay) {
-    giftBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      giftOverlay.classList.add("show");
-      giftOverlay.setAttribute("aria-hidden", "false");
+    if (menuBtn && menuOverlay) {
+      menuBtn.addEventListener("click", () => menuOverlay.classList.add("show"));
+    }
+
+    if (closeBtn && menuOverlay) {
+      closeBtn.addEventListener("click", () => menuOverlay.classList.remove("show"));
+    }
+
+    if (menuOverlay) {
+      menuOverlay.addEventListener("click", (e) => {
+        if (e.target === menuOverlay) menuOverlay.classList.remove("show");
+      });
+    }
+
+    // ========= PÁGINAS =========
+    const pages = Array.from(document.querySelectorAll(".page"));
+    let active = "inicio";
+
+    function getPage(name) {
+      return pages.find(p => p.dataset.page === name);
+    }
+
+    function setActive(target) {
+      if (!target || target === active) return;
+
+      const current = getPage(active);
+      const next = getPage(target);
+
+      if (!current || !next) return;
+
+      current.classList.remove("is-visible");
+
+      setTimeout(() => {
+        current.classList.remove("is-active");
+        next.classList.add("is-active");
+
+        requestAnimationFrame(() => {
+          next.classList.add("is-visible");
+        });
+
+        active = target;
+        setRealViewportHeight();
+        window.scrollTo(0, 0);
+
+        if (target === "inicio") {
+          showHomeHintFor15Seconds();
+        }
+      }, 220);
+    }
+
+    document.querySelectorAll(".menuLink").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (menuOverlay) menuOverlay.classList.remove("show");
+        setActive(btn.dataset.page);
+      });
     });
 
-    giftOverlay.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      giftOverlay.classList.remove("show");
-      giftOverlay.setAttribute("aria-hidden", "true");
-    });
-  }
-</script>
+    // ========= REPLAY =========
+    const replayBtn = document.getElementById("replayBtn");
+
+    if (replayBtn) {
+      replayBtn.addEventListener("click", () => {
+        if (menuOverlay) menuOverlay.classList.remove("show");
+        showIntro();
+      });
+    }
+
+    // ========= INVITACIÓN FULLSCREEN ROBUSTA iPHONE =========
+    const openInv = document.getElementById("openInvFull");
+    const invFull = document.getElementById("invFull");
+    const invFullImg = document.getElementById("invFullImg");
+
+    let lastOpenedFullAt = 0;
+
+    function openFull(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (!invFull) return;
+
+      lastOpenedFullAt = Date.now();
+
+      invFull.classList.add("show");
+      invFull.setAttribute("aria-hidden", "false");
+
+      setRealViewportHeight();
+    }
+
+    function closeFull(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (Date.now() - lastOpenedFullAt < 450) return;
+      if (!invFull) return;
+
+      invFull.classList.remove("show");
+      invFull.setAttribute("aria-hidden", "true");
+    }
+
+    if (openInv && invFull) {
+      openInv.addEventListener("click", openFull, { passive: false });
+      openInv.addEventListener("touchend", openFull, { passive: false });
+
+      invFull.addEventListener("click", closeFull, { passive: false });
+      invFull.addEventListener("touchend", closeFull, { passive: false });
+
+      if (invFullImg) {
+        invFullImg.addEventListener("click", closeFull, { passive: false });
+        invFullImg.addEventListener("touchend", closeFull, { passive: false });
+      }
+    }
+
+    // ========= SORPRESA =========
+    const giftBtn = document.getElementById("giftBtn");
+    const giftOverlay = document.getElementById("giftOverlay");
+
+    if (giftBtn && giftOverlay) {
+      giftBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        giftOverlay.classList.add("show");
+        giftOverlay.setAttribute("aria-hidden", "false");
+      });
+
+      giftOverlay.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        giftOverlay.classList.remove("show");
+        giftOverlay.setAttribute("aria-hidden", "true");
+      });
+    }
+  </script>
 
 </body>
 </html>
