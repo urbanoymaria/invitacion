@@ -969,3 +969,94 @@ html.is-ios .invFullImg {
 .menuOverlay .closeBtn {
   color: #fff !important;
 }
+
+/* =========================================================
+   FIX DEFINITIVO CABECERA BLANCA - DEBE IR AL FINAL DEL CSS
+   ========================================================= */
+
+header.topbar,
+.topbar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+header.topbar button,
+header.topbar .iconBtn,
+header.topbar .logoText,
+header.topbar .replayBtn,
+header.topbar .giftBtn,
+.topbar button,
+.topbar .iconBtn,
+.topbar .logoText,
+.topbar .replayBtn,
+.topbar .giftBtn {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.35) !important;
+}
+
+header.topbar .giftIcon,
+.topbar .giftIcon {
+  opacity: 1 !important;
+  filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,.35)) !important;
+}
+
+/* Por si iPhone/Safari intenta aplicar color heredado raro */
+html.is-ios header.topbar button,
+html.is-ios header.topbar .iconBtn,
+html.is-ios header.topbar .logoText,
+html.is-ios header.topbar .replayBtn,
+html.is-ios header.topbar .giftBtn {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+html.is-ios header.topbar .giftIcon {
+  filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,.35)) !important;
+}
+
+/* =========================================================
+   FIX FINAL: CABECERA VISIBLE SOBRE FONDO BLANCO
+   =========================================================
+   Recupera visibilidad del menú, U&M, regalo y refrescar.
+   No toca secciones, invitación, autobús, itinerario ni iPhone.
+*/
+
+header.topbar,
+.topbar {
+  background: rgba(255,255,255,.92) !important;
+  box-shadow: none !important;
+}
+
+header.topbar button,
+header.topbar .iconBtn,
+header.topbar .logoText,
+header.topbar .replayBtn,
+header.topbar .giftBtn,
+.topbar button,
+.topbar .iconBtn,
+.topbar .logoText,
+.topbar .replayBtn,
+.topbar .giftBtn {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+header.topbar .giftIcon,
+.topbar .giftIcon {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* El menú desplegado sí se mantiene en blanco */
+.menuOverlay,
+.menuOverlay *,
+.menuOverlay .menuLink,
+.menuOverlay .closeBtn {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
