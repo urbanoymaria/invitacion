@@ -851,212 +851,91 @@ a:active {
 }
 
 /* =========================================================
-   FIX FINAL iPHONE SIN TOCAR ANDROID + CABECERA BLANCA
+   FIX SOLO iPHONE / iPAD - NO TOCA ANDROID
    ========================================================= */
 
-/* Android/PC: se mantiene el flujo normal del vídeo. */
-.intro,
-.introVideo {
-  width: 100vw;
-  height: 100vh;
-  min-height: 100vh;
+.is-ios-device html,
+html.is-ios-device,
+html.is-ios-device body {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+html.is-ios-device .intro,
+html.is-ios-device .introVideo,
+html.is-ios-device .app,
+html.is-ios-device .pages {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+html.is-ios-device .page {
+  height: calc((var(--vh, 1vh) * 100) - 56px) !important;
+}
+
+html.is-ios-device .intro {
   background: #000;
 }
 
-.introVideo {
-  object-fit: cover;
+html.is-ios-device .intro.ios-video-starting {
+  background: #000;
 }
 
-/* Solo se activa en iPhone/iPad mediante JS: html.is-ios */
-.iosIntroPrompt {
-  display: none;
-}
-
-html.is-ios .iosIntroPrompt {
-  position: absolute;
+html.is-ios-device .iosStartOverlay {
+  position: fixed;
   inset: 0;
-  z-index: 2;
+  z-index: 10001;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  background: #7b1020;
+  color: #fff;
+  font-family: "Parisienne", cursive;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  background: #5b0d1a;
-  color: #fff !important;
+  gap: 18px;
   text-align: center;
-  transition: opacity 260ms ease, visibility 260ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-html.is-ios .iosIntroPrompt.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-html.is-ios .iosIntroTitle {
-  font-family: "Parisienne", cursive;
-  font-size: clamp(44px, 13vw, 74px);
-  line-height: 0.95;
-  color: #fff !important;
+html.is-ios-device .iosStartTitle {
+  font-size: clamp(46px, 12vw, 78px);
+  line-height: 1;
   font-weight: 400;
 }
 
-html.is-ios .iosIntroClick {
-  margin-top: 8px;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 15px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #fff !important;
-  opacity: 0.92;
+html.is-ios-device .iosStartClick {
+  font-size: clamp(26px, 7vw, 40px);
+  line-height: 1;
+  font-weight: 400;
+  opacity: .95;
 }
 
-/* Altura real solo en iPhone/iPad para evitar cortes raros de Safari. */
-html.is-ios,
-html.is-ios body {
+html.is-ios-device .invFull,
+html.is-ios-device .giftOverlay {
   height: calc(var(--vh, 1vh) * 100);
 }
 
-html.is-ios .app,
-html.is-ios .pages {
-  height: calc(var(--vh, 1vh) * 100);
-}
-
-html.is-ios .page {
-  height: calc((var(--vh, 1vh) * 100) - 56px) !important;
-}
-
-html.is-ios .intro,
-html.is-ios .introVideo {
-  height: calc(var(--vh, 1vh) * 100);
-}
-
-html.is-ios .invFull {
-  height: calc(var(--vh, 1vh) * 100);
-}
-
-html.is-ios .invFullImg {
+html.is-ios-device .invFullImg {
   width: auto !important;
   max-width: 100vw !important;
   max-height: calc(var(--vh, 1vh) * 100) !important;
   object-fit: contain !important;
 }
 
-/* CABECERA: restaurada en blanco, sin gris. */
-.topbar {
-  background: transparent !important;
-}
-
-.topbar,
-.topbar *,
-.iconBtn,
-.logoText,
-.replayBtn,
-.giftBtn {
-  color: #fff !important;
-  opacity: 1 !important;
-}
-
-.giftIcon {
-  opacity: 1 !important;
-  filter: brightness(0) invert(1) !important;
-}
-
-/* El menú overlay sigue en blanco */
-.menuOverlay,
-.menuOverlay *,
-.menuOverlay .menuLink,
-.menuOverlay .closeBtn {
-  color: #fff !important;
-}
-
-/* =========================================================
-   FIX DEFINITIVO CABECERA BLANCA - DEBE IR AL FINAL DEL CSS
-   ========================================================= */
-
-header.topbar,
-.topbar {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-header.topbar button,
-header.topbar .iconBtn,
-header.topbar .logoText,
-header.topbar .replayBtn,
-header.topbar .giftBtn,
-.topbar button,
+/* Cabecera restaurada: visible sobre fondo blanco, sin afectar al menú overlay */
 .topbar .iconBtn,
 .topbar .logoText,
-.topbar .replayBtn,
-.topbar .giftBtn {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  opacity: 1 !important;
-  text-shadow: 0 1px 4px rgba(0,0,0,.35) !important;
+.topbar .giftBtn,
+.topbar .replayBtn {
+  color: var(--text-main) !important;
 }
 
-header.topbar .giftIcon,
 .topbar .giftIcon {
   opacity: 1 !important;
-  filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,.35)) !important;
 }
 
-/* Por si iPhone/Safari intenta aplicar color heredado raro */
-html.is-ios header.topbar button,
-html.is-ios header.topbar .iconBtn,
-html.is-ios header.topbar .logoText,
-html.is-ios header.topbar .replayBtn,
-html.is-ios header.topbar .giftBtn {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  opacity: 1 !important;
-}
-
-html.is-ios header.topbar .giftIcon {
-  filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,.35)) !important;
-}
-
-/* =========================================================
-   FIX FINAL: CABECERA VISIBLE SOBRE FONDO BLANCO
-   =========================================================
-   Recupera visibilidad del menú, U&M, regalo y refrescar.
-   No toca secciones, invitación, autobús, itinerario ni iPhone.
-*/
-
-header.topbar,
-.topbar {
-  background: rgba(255,255,255,.92) !important;
-  box-shadow: none !important;
-}
-
-header.topbar button,
-header.topbar .iconBtn,
-header.topbar .logoText,
-header.topbar .replayBtn,
-header.topbar .giftBtn,
-.topbar button,
-.topbar .iconBtn,
-.topbar .logoText,
-.topbar .replayBtn,
-.topbar .giftBtn {
-  color: #000 !important;
-  -webkit-text-fill-color: #000 !important;
-  opacity: 1 !important;
-  text-shadow: none !important;
-}
-
-header.topbar .giftIcon,
-.topbar .giftIcon {
-  opacity: 1 !important;
-  filter: none !important;
-}
-
-/* El menú desplegado sí se mantiene en blanco */
 .menuOverlay,
-.menuOverlay *,
-.menuOverlay .menuLink,
-.menuOverlay .closeBtn {
+.menuOverlay * {
   color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
 }

@@ -10,18 +10,18 @@
 <title>Urbano y María | 12/09/2026</title>
 <meta name="description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
 
-<link rel="canonical" href="https://urbanoymaria.github.io/invitacion/" />
+<link rel="canonical" href="https://urbano91.github.io/urbanoymaria/" />
 
 <meta property="og:locale" content="es_ES" />
 <meta property="og:site_name" content="Urbano y María" />
 <meta property="og:title" content="Urbano y María | 12/09/2026" />
 <meta property="og:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://urbanoymaria.github.io/invitacion/" />
+<meta property="og:url" content="https://urbano91.github.io/urbanoymaria/" />
 
-<meta property="og:image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
-<meta property="og:image:url" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
-<meta property="og:image:secure_url" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
+<meta property="og:image" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
+<meta property="og:image:url" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
+<meta property="og:image:secure_url" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:width" content="1122" />
 <meta property="og:image:height" content="1402" />
@@ -29,12 +29,12 @@
 
 <meta itemprop="name" content="Urbano y María | Invitación de boda" />
 <meta itemprop="description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-<meta itemprop="image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
+<meta itemprop="image" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Urbano y María | Invitación de boda" />
 <meta name="twitter:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-<meta name="twitter:image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
+<meta name="twitter:image" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
 
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=topbar-visible-final" />
+  <link rel="stylesheet" href="style.css?v=ios-only-restore-topbar" />
 
   <!-- Ocultar hint de portada a los 15 segundos -->
   <style>
@@ -70,12 +70,6 @@
       muted
       preload="auto"
     ></video>
-
-    <!-- Solo iPhone/iPad: evita pantalla negra antes de reproducir -->
-    <div id="iosIntroPrompt" class="iosIntroPrompt" aria-hidden="true">
-      <div class="iosIntroTitle">Urbano y María</div>
-      <div class="iosIntroClick">12/09/2026</div>
-    </div>
   </div>
 
   <!-- APP -->
@@ -363,12 +357,12 @@
   </div>
 
   <script>
-    // ========= DETECCIÓN IOS =========
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    // ========= DETECCIÓN iPHONE / iPAD =========
+    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
-    if (isIOS) {
-      document.documentElement.classList.add("is-ios");
+    if (isIOSDevice) {
+      document.documentElement.classList.add("is-ios-device");
     }
 
     // ========= ALTURA REAL EN MÓVILES =========
@@ -386,11 +380,9 @@
     const intro = document.getElementById("intro");
     const introVideo = document.getElementById("introVideo");
     const app = document.getElementById("app");
-    const iosIntroPrompt = document.getElementById("iosIntroPrompt");
 
     let started = false;
     let introFallbackTimer = null;
-    let iosPlayingSafetyTimer = null;
 
     // ========= HINT PORTADA =========
     const invHintHome = document.querySelector(".invHintHome");
@@ -404,56 +396,67 @@
 
       invHintTimer = setTimeout(() => {
         invHintHome.classList.add("is-hidden");
-      }, 15000);
+      }, 30000);
     }
 
-    function showApp() {
+    function showApp(){
       clearTimeout(introFallbackTimer);
-      clearTimeout(iosPlayingSafetyTimer);
 
       intro.style.display = "none";
       intro.classList.remove("fadeOut");
-
       app.classList.add("show");
       app.setAttribute("aria-hidden", "false");
-
       setRealViewportHeight();
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
 
       showHomeHintFor15Seconds();
     }
 
-    function fadeToApp() {
+    function showIntro(){
       clearTimeout(introFallbackTimer);
-      clearTimeout(iosPlayingSafetyTimer);
-      intro.classList.add("fadeOut");
-      setTimeout(showApp, 520);
-    }
-
-    function showIntro() {
-      clearTimeout(introFallbackTimer);
-      clearTimeout(iosPlayingSafetyTimer);
       clearTimeout(invHintTimer);
 
       app.classList.remove("show");
       app.setAttribute("aria-hidden", "true");
-
       intro.style.display = "block";
       intro.classList.remove("fadeOut");
-      intro.classList.remove("is-playing");
-
+      intro.classList.remove("ios-video-starting");
       started = false;
-
-      if (iosIntroPrompt) {
-        iosIntroPrompt.classList.remove("is-hidden");
-      }
 
       if (invHintHome) invHintHome.classList.remove("is-hidden");
 
-      try {
+      try{
         introVideo.pause();
         introVideo.currentTime = 0;
-      } catch (e) {}
+        introVideo.style.visibility = isIOSDevice ? "hidden" : "visible";
+      }catch(e){}
+
+      if (isIOSDevice) showIOSStartOverlay();
+    }
+
+    // ========= PANTALLA PREVIA SOLO iPHONE =========
+    function showIOSStartOverlay() {
+      if (!isIOSDevice || !intro) return;
+      if (document.getElementById("iosStartOverlay")) return;
+
+      const overlay = document.createElement("button");
+      overlay.id = "iosStartOverlay";
+      overlay.className = "iosStartOverlay";
+      overlay.type = "button";
+      overlay.setAttribute("aria-label", "Abrir invitación");
+      overlay.innerHTML = `
+        <span class="iosStartTitle">Urbano y María</span>
+        <span class="iosStartClick">Click</span>
+      `;
+
+      intro.appendChild(overlay);
+      overlay.addEventListener("click", startIntro, { passive: false });
+      overlay.addEventListener("touchend", startIntro, { passive: false });
+    }
+
+    function removeIOSStartOverlay() {
+      const overlay = document.getElementById("iosStartOverlay");
+      if (overlay) overlay.remove();
     }
 
     async function startIntro(e) {
@@ -464,9 +467,13 @@
 
       if (started) return;
       started = true;
-
       clearTimeout(introFallbackTimer);
-      clearTimeout(iosPlayingSafetyTimer);
+
+      if (isIOSDevice) {
+        removeIOSStartOverlay();
+        intro.classList.add("ios-video-starting");
+        introVideo.style.visibility = "hidden";
+      }
 
       try {
         introVideo.muted = true;
@@ -474,66 +481,58 @@
         introVideo.setAttribute("playsinline", "");
         introVideo.setAttribute("webkit-playsinline", "");
         introVideo.currentTime = 0;
-      } catch (e) {}
 
-      // En iPhone mantenemos la pantalla "Urbano y María / Click" visible
-      // hasta que Safari confirme que el vídeo está reproduciendo. Así evitamos
-      // pantalla negra o sobre congelado.
-      if (isIOS && iosIntroPrompt) {
-        iosIntroPrompt.classList.remove("is-hidden");
-      }
-
-      try {
         const playPromise = introVideo.play();
+
         if (playPromise && typeof playPromise.then === "function") {
           await playPromise;
         }
-      } catch (error) {
-        // Si iPhone bloquea el vídeo, no dejamos la web rota.
-        // Se mantiene la pantalla bonita y pasamos a la invitación.
-        setTimeout(fadeToApp, 450);
-        return;
-      }
 
-      // Si no llega el evento "playing" en iPhone, no enseñamos negro.
-      // Pasamos a la invitación antes de que parezca roto.
-      if (isIOS) {
-        iosPlayingSafetyTimer = setTimeout(() => {
-          if (!intro.classList.contains("is-playing")) {
-            fadeToApp();
+        // En iPhone solo mostramos el vídeo cuando Safari confirme que está reproduciendo.
+        if (isIOSDevice) {
+          const revealVideo = () => {
+            intro.classList.remove("ios-video-starting");
+            introVideo.style.visibility = "visible";
+          };
+
+          if (!introVideo.paused && introVideo.readyState >= 2) {
+            setTimeout(revealVideo, 80);
+          } else {
+            introVideo.addEventListener("playing", revealVideo, { once: true });
+            introVideo.addEventListener("timeupdate", revealVideo, { once: true });
           }
-        }, 1800);
+
+          // Si iPhone no reproduce bien el vídeo, no dejamos pantalla negra: entramos en la invitación.
+          introFallbackTimer = setTimeout(() => {
+            intro.classList.add("fadeOut");
+            setTimeout(showApp, 520);
+          }, 4200);
+        }
+      } catch (error) {
+        intro.classList.add("fadeOut");
+        setTimeout(showApp, 520);
       }
-
-      const duration = Number.isFinite(introVideo.duration) && introVideo.duration > 0
-        ? introVideo.duration
-        : 6;
-
-      introFallbackTimer = setTimeout(() => {
-        fadeToApp();
-      }, Math.min((duration + 1) * 1000, 10000));
     }
 
     if (intro && introVideo) {
-      intro.addEventListener("click", startIntro, { passive: false });
-      intro.addEventListener("touchend", startIntro, { passive: false });
-
-      introVideo.addEventListener("playing", () => {
-        intro.classList.add("is-playing");
-
-        if (iosIntroPrompt) {
-          iosIntroPrompt.classList.add("is-hidden");
-        }
-
-        clearTimeout(iosPlayingSafetyTimer);
-      });
+      if (isIOSDevice) {
+        introVideo.style.visibility = "hidden";
+        showIOSStartOverlay();
+      } else {
+        intro.addEventListener("click", startIntro, { passive: false });
+        intro.addEventListener("touchstart", startIntro, { passive: false });
+      }
 
       introVideo.addEventListener("ended", () => {
-        fadeToApp();
+        clearTimeout(introFallbackTimer);
+        intro.classList.add("fadeOut");
+        setTimeout(showApp, 520);
       });
 
       introVideo.addEventListener("error", () => {
-        fadeToApp();
+        clearTimeout(introFallbackTimer);
+        intro.classList.add("fadeOut");
+        setTimeout(showApp, 520);
       });
     }
 
@@ -560,31 +559,22 @@
     const pages = Array.from(document.querySelectorAll(".page"));
     let active = "inicio";
 
-    function getPage(name) {
-      return pages.find(p => p.dataset.page === name);
-    }
+    function getPage(name){ return pages.find(p => p.dataset.page === name); }
 
-    function setActive(target) {
+    function setActive(target){
       if (!target || target === active) return;
-
       const current = getPage(active);
       const next = getPage(target);
-
       if (!current || !next) return;
 
       current.classList.remove("is-visible");
-
       setTimeout(() => {
         current.classList.remove("is-active");
         next.classList.add("is-active");
-
-        requestAnimationFrame(() => {
-          next.classList.add("is-visible");
-        });
-
+        requestAnimationFrame(() => next.classList.add("is-visible"));
         active = target;
         setRealViewportHeight();
-        window.scrollTo(0, 0);
+        window.scrollTo(0,0);
 
         if (target === "inicio") {
           showHomeHintFor15Seconds();
@@ -601,7 +591,6 @@
 
     // ========= REPLAY =========
     const replayBtn = document.getElementById("replayBtn");
-
     if (replayBtn) {
       replayBtn.addEventListener("click", () => {
         if (menuOverlay) menuOverlay.classList.remove("show");
@@ -609,14 +598,13 @@
       });
     }
 
-    // ========= INVITACIÓN FULLSCREEN ROBUSTA iPHONE =========
+    // ========= INVITACIÓN FULLSCREEN =========
     const openInv = document.getElementById("openInvFull");
     const invFull = document.getElementById("invFull");
     const invFullImg = document.getElementById("invFullImg");
-
     let lastOpenedFullAt = 0;
 
-    function openFull(e) {
+    function openFull(e){
       if (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -625,14 +613,12 @@
       if (!invFull) return;
 
       lastOpenedFullAt = Date.now();
-
       invFull.classList.add("show");
       invFull.setAttribute("aria-hidden", "false");
-
       setRealViewportHeight();
     }
 
-    function closeFull(e) {
+    function closeFull(e){
       if (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -666,7 +652,6 @@
       giftBtn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
-
         giftOverlay.classList.add("show");
         giftOverlay.setAttribute("aria-hidden", "false");
       });
@@ -674,7 +659,6 @@
       giftOverlay.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
-
         giftOverlay.classList.remove("show");
         giftOverlay.setAttribute("aria-hidden", "true");
       });
