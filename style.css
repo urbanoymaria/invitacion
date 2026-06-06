@@ -851,7 +851,7 @@ a:active {
 }
 
 /* =========================================================
-   FIX iPHONE - PANTALLA INICIAL DEL SOBRE SIN NEGRO
+   FIX iPHONE / SAFARI - ALTURAS Y FULLSCREEN
    ========================================================= */
 
 html,
@@ -868,82 +868,9 @@ body {
   height: calc((var(--vh, 1vh) * 100) - 56px) !important;
 }
 
-.intro {
-  height: calc(var(--vh, 1vh) * 100);
-  background:
-    radial-gradient(circle at 50% 42%, rgba(158, 25, 43, 0.95) 0%, rgba(95, 8, 22, 0.98) 55%, rgba(42, 0, 8, 1) 100%);
-  overflow: hidden;
-}
-
+.intro,
 .introVideo {
   height: calc(var(--vh, 1vh) * 100);
-  opacity: 0;
-  transition: opacity 260ms ease;
-}
-
-.intro.is-playing .introVideo {
-  opacity: 1;
-}
-
-.introStartHint {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font-family: "Parisienne", cursive;
-  text-align: center;
-  cursor: pointer;
-
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  user-select: none;
-}
-
-.introSeal {
-  width: 78px;
-  height: 78px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 999px;
-  border: 1px solid rgba(255, 215, 130, 0.8);
-  background: radial-gradient(circle, #d7a642 0%, #9b681d 72%);
-  box-shadow: 0 10px 30px rgba(0,0,0,.22);
-
-  color: #fff7df;
-  font-size: 25px;
-  line-height: 1;
-}
-
-.introNames {
-  margin-top: 6px;
-  font-size: clamp(42px, 12vw, 76px);
-  line-height: 0.95;
-  color: #fff;
-  text-shadow: 0 2px 18px rgba(0,0,0,.28);
-}
-
-.introText {
-  font-size: clamp(22px, 6vw, 34px);
-  color: rgba(255,255,255,.88);
-  text-shadow: 0 1px 14px rgba(0,0,0,.22);
-}
-
-.intro.is-playing .introStartHint,
-.intro.fadeOut .introStartHint {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 220ms ease;
 }
 
 .invFull {
@@ -958,13 +885,65 @@ body {
   object-fit: contain !important;
 }
 
-/* Mantiene el menú en blanco aunque el resto de textos estén en negro */
-.menuOverlay,
-.menuOverlay * {
-  color: #fff !important;
+/* =========================================================
+   INTRO iPHONE/iPAD - SOLO EN iOS
+   Android y PC se quedan como estaban.
+   En iPhone/iPad evita la pantalla negra inicial antes del toque.
+   ========================================================= */
+
+.introIosHint {
+  display: none;
 }
 
-.menuOverlay .menuLink,
-.menuOverlay .closeBtn {
+html.is-ios-device .intro {
+  background: #6f1020;
+}
+
+html.is-ios-device .intro:not(.is-playing) .introVideo {
+  opacity: 0;
+}
+
+html.is-ios-device .intro.is-playing .introVideo {
+  opacity: 1;
+}
+
+html.is-ios-device .intro:not(.is-playing) .introIosHint {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255,255,255,.10), rgba(255,255,255,0) 34%),
+    linear-gradient(180deg, #7b1020 0%, #55101b 100%);
   color: #fff !important;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html.is-ios-device .intro.is-playing .introIosHint {
+  display: none;
+}
+
+html.is-ios-device .introIosNames {
+  font-family: "Parisienne", cursive;
+  font-size: clamp(46px, 13vw, 78px);
+  line-height: .95;
+  color: #fff !important;
+  text-shadow: 0 2px 16px rgba(0,0,0,.18);
+}
+
+html.is-ios-device .introIosClick {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 13px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.88) !important;
+  border-top: 1px solid rgba(255,255,255,.42);
+  border-bottom: 1px solid rgba(255,255,255,.42);
+  padding: 7px 20px;
 }
