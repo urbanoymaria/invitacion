@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=iphone1" />
+  <link rel="stylesheet" href="style.css?v=8" />
 
   <!-- Ocultar hint de portada a los 15 segundos -->
   <style>
@@ -70,6 +70,13 @@
       muted
       preload="auto"
     ></video>
+
+    <!-- Pantalla inicial para que en iPhone no aparezca todo negro antes de tocar -->
+    <button id="introStartHint" class="introStartHint" type="button" aria-label="Abrir invitación">
+      <span class="introSeal">U&amp;M</span>
+      <span class="introNames">Urbano y María</span>
+      <span class="introText">Toca para abrir el sobre</span>
+    </button>
   </div>
 
   <!-- APP -->
@@ -371,12 +378,13 @@
   // ========= INTRO SOBRE =========
   const intro = document.getElementById("intro");
   const introVideo = document.getElementById("introVideo");
+  const introStartHint = document.getElementById("introStartHint");
   const app = document.getElementById("app");
 
   let started = false;
   let introFallbackTimer = null;
 
-  // ========= HINT PORTADA =========
+  // ========= HINT PORTADA 15 SEGUNDOS =========
   const invHintHome = document.querySelector(".invHintHome");
   let invHintTimer = null;
 
@@ -391,50 +399,44 @@
     }, 15000);
   }
 
-  function showApp() {
+  function showApp(){
     clearTimeout(introFallbackTimer);
 
-    if (intro) {
-      intro.style.display = "none";
-      intro.classList.remove("fadeOut");
-    }
+    intro.style.display = "none";
+    intro.classList.remove("fadeOut");
+    intro.classList.remove("is-playing");
 
-    if (app) {
-      app.classList.add("show");
-      app.setAttribute("aria-hidden", "false");
-    }
+    app.classList.add("show");
+    app.setAttribute("aria-hidden", "false");
 
     setRealViewportHeight();
-    window.scrollTo(0, 0);
+    window.scrollTo(0,0);
 
     showHomeHintFor15Seconds();
   }
 
-  function showIntro() {
+  function showIntro(){
     clearTimeout(introFallbackTimer);
     clearTimeout(invHintTimer);
 
-    if (app) {
-      app.classList.remove("show");
-      app.setAttribute("aria-hidden", "true");
-    }
+    app.classList.remove("show");
+    app.setAttribute("aria-hidden", "true");
 
-    if (intro) {
-      intro.style.display = "block";
-      intro.classList.remove("fadeOut");
-    }
+    intro.style.display = "block";
+    intro.classList.remove("fadeOut");
+    intro.classList.remove("is-playing");
 
     started = false;
 
     if (invHintHome) invHintHome.classList.remove("is-hidden");
 
-    try {
+    try{
       introVideo.pause();
       introVideo.currentTime = 0;
-    } catch (e) {}
+    }catch(e){}
   }
 
-  async function startIntro(e) {
+  async function startIntro(e){
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -445,16 +447,17 @@
 
     clearTimeout(introFallbackTimer);
 
-    // Fallback para iPhone: si el vídeo no termina o no dispara "ended",
-    // mostramos igualmente la invitación.
-    const duration = Number.isFinite(introVideo?.duration) && introVideo.duration > 0
-      ? introVideo.duration
-      : 6;
+    intro.classList.add("is-playing");
+
+    // Fallback iPhone: si Safari no lanza el ended del vídeo, no se queda bloqueado.
+    const fallbackSeconds = Number.isFinite(introVideo.duration) && introVideo.duration > 0
+      ? Math.min(introVideo.duration + 1, 10)
+      : 7;
 
     introFallbackTimer = setTimeout(() => {
-      if (intro) intro.classList.add("fadeOut");
+      intro.classList.add("fadeOut");
       setTimeout(showApp, 520);
-    }, Math.min((duration + 1) * 1000, 10000));
+    }, fallbackSeconds * 1000);
 
     try {
       introVideo.muted = true;
@@ -465,7 +468,8 @@
       introVideo.currentTime = 0;
       await introVideo.play();
     } catch (error) {
-      if (intro) intro.classList.add("fadeOut");
+      clearTimeout(introFallbackTimer);
+      intro.classList.add("fadeOut");
       setTimeout(showApp, 520);
     }
   }
@@ -473,6 +477,11 @@
   if (intro && introVideo) {
     intro.addEventListener("click", startIntro, { passive: false });
     intro.addEventListener("touchend", startIntro, { passive: false });
+
+    if (introStartHint) {
+      introStartHint.addEventListener("click", startIntro, { passive: false });
+      introStartHint.addEventListener("touchend", startIntro, { passive: false });
+    }
 
     introVideo.addEventListener("ended", () => {
       clearTimeout(introFallbackTimer);
@@ -510,11 +519,9 @@
   const pages = Array.from(document.querySelectorAll(".page"));
   let active = "inicio";
 
-  function getPage(name) {
-    return pages.find(p => p.dataset.page === name);
-  }
+  function getPage(name){ return pages.find(p => p.dataset.page === name); }
 
-  function setActive(target) {
+  function setActive(target){
     if (!target || target === active) return;
 
     const current = getPage(active);
@@ -528,13 +535,11 @@
       current.classList.remove("is-active");
       next.classList.add("is-active");
 
-      requestAnimationFrame(() => {
-        next.classList.add("is-visible");
-      });
+      requestAnimationFrame(() => next.classList.add("is-visible"));
 
       active = target;
       setRealViewportHeight();
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
 
       if (target === "inicio") {
         showHomeHintFor15Seconds();
@@ -566,7 +571,7 @@
 
   let lastOpenedFullAt = 0;
 
-  function openFull(e) {
+  function openFull(e){
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -582,7 +587,7 @@
     setRealViewportHeight();
   }
 
-  function closeFull(e) {
+  function closeFull(e){
     if (e) {
       e.preventDefault();
       e.stopPropagation();
