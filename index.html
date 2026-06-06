@@ -10,18 +10,18 @@
 <title>Urbano y María | 12/09/2026</title>
 <meta name="description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
 
-<link rel="canonical" href="https://urbano91.github.io/urbanoymaria/" />
+<link rel="canonical" href="https://urbanoymaria.github.io/invitacion/" />
 
 <meta property="og:locale" content="es_ES" />
 <meta property="og:site_name" content="Urbano y María" />
 <meta property="og:title" content="Urbano y María | 12/09/2026" />
 <meta property="og:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://urbano91.github.io/urbanoymaria/" />
+<meta property="og:url" content="https://urbanoymaria.github.io/invitacion/" />
 
-<meta property="og:image" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
-<meta property="og:image:url" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
-<meta property="og:image:secure_url" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
+<meta property="og:image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
+<meta property="og:image:url" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
+<meta property="og:image:secure_url" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="og:image:width" content="1122" />
 <meta property="og:image:height" content="1402" />
@@ -29,12 +29,12 @@
 
 <meta itemprop="name" content="Urbano y María | Invitación de boda" />
 <meta itemprop="description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-<meta itemprop="image" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
+<meta itemprop="image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Urbano y María | Invitación de boda" />
 <meta name="twitter:description" content="Nos hace mucha ilusión invitarte a nuestra boda. Toca para abrir la invitación." />
-<meta name="twitter:image" content="https://urbano91.github.io/urbanoymaria/assets/whatsapp-card.jpg" />
+<meta name="twitter:image" content="https://urbanoymaria.github.io/invitacion/assets/whatsapp-card.jpg" />
 
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=iphone1" />
 
   <!-- Ocultar hint de portada a los 15 segundos -->
   <style>
@@ -61,7 +61,15 @@
 
   <!-- INTRO: SOBRE -->
   <div id="intro" class="intro" aria-label="Sobre de invitación">
-    <video id="introVideo" class="introVideo" src="assets/Sobre.mp4" playsinline preload="auto"></video>
+    <video
+      id="introVideo"
+      class="introVideo"
+      src="assets/Sobre.mp4"
+      playsinline
+      webkit-playsinline
+      muted
+      preload="auto"
+    ></video>
   </div>
 
   <!-- APP -->
@@ -349,170 +357,281 @@
   </div>
 
   <script>
-    // ========= INTRO SOBRE =========
-    const intro = document.getElementById("intro");
-    const introVideo = document.getElementById("introVideo");
-    const app = document.getElementById("app");
+  // ========= ALTURA REAL EN MÓVILES / iPHONE =========
+  function setRealViewportHeight() {
+    document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
+  }
 
-    let started = false;
+  setRealViewportHeight();
+  window.addEventListener("resize", setRealViewportHeight);
+  window.addEventListener("orientationchange", () => {
+    setTimeout(setRealViewportHeight, 300);
+  });
 
-    // ========= HINT PORTADA 15 SEGUNDOS =========
-    const invHintHome = document.querySelector(".invHintHome");
-    let invHintTimer = null;
+  // ========= INTRO SOBRE =========
+  const intro = document.getElementById("intro");
+  const introVideo = document.getElementById("introVideo");
+  const app = document.getElementById("app");
 
-    function showHomeHintFor15Seconds() {
-      if (!invHintHome) return;
+  let started = false;
+  let introFallbackTimer = null;
 
-      clearTimeout(invHintTimer);
+  // ========= HINT PORTADA =========
+  const invHintHome = document.querySelector(".invHintHome");
+  let invHintTimer = null;
 
-      invHintHome.classList.remove("is-hidden");
+  function showHomeHintFor15Seconds() {
+    if (!invHintHome) return;
 
-      invHintTimer = setTimeout(() => {
-        invHintHome.classList.add("is-hidden");
-      }, 30000);
-    }
+    clearTimeout(invHintTimer);
+    invHintHome.classList.remove("is-hidden");
 
-    function showApp(){
+    invHintTimer = setTimeout(() => {
+      invHintHome.classList.add("is-hidden");
+    }, 15000);
+  }
+
+  function showApp() {
+    clearTimeout(introFallbackTimer);
+
+    if (intro) {
       intro.style.display = "none";
       intro.classList.remove("fadeOut");
+    }
+
+    if (app) {
       app.classList.add("show");
       app.setAttribute("aria-hidden", "false");
-      window.scrollTo(0,0);
-
-      // Empieza a contar los 15 segundos cuando aparece la portada
-      showHomeHintFor15Seconds();
     }
 
-    function showIntro(){
+    setRealViewportHeight();
+    window.scrollTo(0, 0);
+
+    showHomeHintFor15Seconds();
+  }
+
+  function showIntro() {
+    clearTimeout(introFallbackTimer);
+    clearTimeout(invHintTimer);
+
+    if (app) {
       app.classList.remove("show");
       app.setAttribute("aria-hidden", "true");
-      intro.style.display = "block";
-      intro.classList.remove("fadeOut");
-      started = false;
-
-      clearTimeout(invHintTimer);
-      if (invHintHome) invHintHome.classList.remove("is-hidden");
-
-      try{
-        introVideo.pause();
-        introVideo.currentTime = 0;
-      }catch(e){}
     }
 
-    intro.addEventListener("click", async () => {
-      if (started) return;
-      started = true;
-      try {
-        introVideo.currentTime = 0;
-        await introVideo.play();
-      } catch (e) {
-        showApp();
-      }
-    });
+    if (intro) {
+      intro.style.display = "block";
+      intro.classList.remove("fadeOut");
+    }
+
+    started = false;
+
+    if (invHintHome) invHintHome.classList.remove("is-hidden");
+
+    try {
+      introVideo.pause();
+      introVideo.currentTime = 0;
+    } catch (e) {}
+  }
+
+  async function startIntro(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    if (started) return;
+    started = true;
+
+    clearTimeout(introFallbackTimer);
+
+    // Fallback para iPhone: si el vídeo no termina o no dispara "ended",
+    // mostramos igualmente la invitación.
+    const duration = Number.isFinite(introVideo?.duration) && introVideo.duration > 0
+      ? introVideo.duration
+      : 6;
+
+    introFallbackTimer = setTimeout(() => {
+      if (intro) intro.classList.add("fadeOut");
+      setTimeout(showApp, 520);
+    }, Math.min((duration + 1) * 1000, 10000));
+
+    try {
+      introVideo.muted = true;
+      introVideo.setAttribute("muted", "");
+      introVideo.setAttribute("playsinline", "");
+      introVideo.setAttribute("webkit-playsinline", "");
+
+      introVideo.currentTime = 0;
+      await introVideo.play();
+    } catch (error) {
+      if (intro) intro.classList.add("fadeOut");
+      setTimeout(showApp, 520);
+    }
+  }
+
+  if (intro && introVideo) {
+    intro.addEventListener("click", startIntro, { passive: false });
+    intro.addEventListener("touchend", startIntro, { passive: false });
 
     introVideo.addEventListener("ended", () => {
+      clearTimeout(introFallbackTimer);
       intro.classList.add("fadeOut");
       setTimeout(showApp, 520);
     });
 
-    // ========= MENÚ =========
-    const menuBtn = document.getElementById("menuBtn");
-    const closeBtn = document.getElementById("closeBtn");
-    const menuOverlay = document.getElementById("menuOverlay");
+    introVideo.addEventListener("error", () => {
+      clearTimeout(introFallbackTimer);
+      intro.classList.add("fadeOut");
+      setTimeout(showApp, 520);
+    });
+  }
 
+  // ========= MENÚ =========
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const menuOverlay = document.getElementById("menuOverlay");
+
+  if (menuBtn && menuOverlay) {
     menuBtn.addEventListener("click", () => menuOverlay.classList.add("show"));
+  }
+
+  if (closeBtn && menuOverlay) {
     closeBtn.addEventListener("click", () => menuOverlay.classList.remove("show"));
+  }
+
+  if (menuOverlay) {
     menuOverlay.addEventListener("click", (e) => {
       if (e.target === menuOverlay) menuOverlay.classList.remove("show");
     });
+  }
 
-    // ========= PÁGINAS =========
-    const pages = Array.from(document.querySelectorAll(".page"));
-    let active = "inicio";
+  // ========= PÁGINAS =========
+  const pages = Array.from(document.querySelectorAll(".page"));
+  let active = "inicio";
 
-    function getPage(name){ return pages.find(p => p.dataset.page === name); }
+  function getPage(name) {
+    return pages.find(p => p.dataset.page === name);
+  }
 
-    function setActive(target){
-      if (!target || target === active) return;
-      const current = getPage(active);
-      const next = getPage(target);
-      if (!current || !next) return;
+  function setActive(target) {
+    if (!target || target === active) return;
 
-      current.classList.remove("is-visible");
-      setTimeout(() => {
-        current.classList.remove("is-active");
-        next.classList.add("is-active");
-        requestAnimationFrame(() => next.classList.add("is-visible"));
-        active = target;
-        window.scrollTo(0,0);
+    const current = getPage(active);
+    const next = getPage(target);
 
-        // Si vuelves a la portada, el aviso vuelve a durar 15 segundos
-        if (target === "inicio") {
-          showHomeHintFor15Seconds();
-        }
-      }, 220);
-    }
+    if (!current || !next) return;
 
-    document.querySelectorAll(".menuLink").forEach(btn => {
-      btn.addEventListener("click", () => {
-        menuOverlay.classList.remove("show");
-        setActive(btn.dataset.page);
+    current.classList.remove("is-visible");
+
+    setTimeout(() => {
+      current.classList.remove("is-active");
+      next.classList.add("is-active");
+
+      requestAnimationFrame(() => {
+        next.classList.add("is-visible");
       });
-    });
 
-    // ========= REPLAY =========
-    const replayBtn = document.getElementById("replayBtn");
+      active = target;
+      setRealViewportHeight();
+      window.scrollTo(0, 0);
+
+      if (target === "inicio") {
+        showHomeHintFor15Seconds();
+      }
+    }, 220);
+  }
+
+  document.querySelectorAll(".menuLink").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (menuOverlay) menuOverlay.classList.remove("show");
+      setActive(btn.dataset.page);
+    });
+  });
+
+  // ========= REPLAY =========
+  const replayBtn = document.getElementById("replayBtn");
+
+  if (replayBtn) {
     replayBtn.addEventListener("click", () => {
-      menuOverlay.classList.remove("show");
+      if (menuOverlay) menuOverlay.classList.remove("show");
       showIntro();
     });
+  }
 
-    // ========= INVITACIÓN FULLSCREEN (PC + MÓVIL) =========
-    const openInv = document.getElementById("openInvFull");
-    const invFull = document.getElementById("invFull");
+  // ========= INVITACIÓN FULLSCREEN ROBUSTA iPHONE =========
+  const openInv = document.getElementById("openInvFull");
+  const invFull = document.getElementById("invFull");
+  const invFullImg = document.getElementById("invFullImg");
 
-    function openFull(e){
+  let lastOpenedFullAt = 0;
+
+  function openFull(e) {
+    if (e) {
       e.preventDefault();
       e.stopPropagation();
-      invFull.classList.add("show");
-      invFull.setAttribute("aria-hidden", "false");
     }
 
-    function closeFull(e){
+    if (!invFull) return;
+
+    lastOpenedFullAt = Date.now();
+
+    invFull.classList.add("show");
+    invFull.setAttribute("aria-hidden", "false");
+
+    setRealViewportHeight();
+  }
+
+  function closeFull(e) {
+    if (e) {
       e.preventDefault();
       e.stopPropagation();
-      invFull.classList.remove("show");
-      invFull.setAttribute("aria-hidden", "true");
     }
 
-    if (openInv && invFull) {
-      openInv.addEventListener("click", openFull);
-      openInv.addEventListener("touchstart", openFull, { passive: false });
+    // Evita que iPhone abra y cierre instantáneamente por doble evento touch/click.
+    if (Date.now() - lastOpenedFullAt < 450) return;
 
-      invFull.addEventListener("click", closeFull);
-      invFull.addEventListener("touchstart", closeFull, { passive: false });
+    if (!invFull) return;
+
+    invFull.classList.remove("show");
+    invFull.setAttribute("aria-hidden", "true");
+  }
+
+  if (openInv && invFull) {
+    openInv.addEventListener("click", openFull, { passive: false });
+    openInv.addEventListener("touchend", openFull, { passive: false });
+
+    invFull.addEventListener("click", closeFull, { passive: false });
+    invFull.addEventListener("touchend", closeFull, { passive: false });
+
+    if (invFullImg) {
+      invFullImg.addEventListener("click", closeFull, { passive: false });
+      invFullImg.addEventListener("touchend", closeFull, { passive: false });
     }
+  }
 
-    // ========= SORPRESA =========
-    const giftBtn = document.getElementById("giftBtn");
-    const giftOverlay = document.getElementById("giftOverlay");
+  // ========= SORPRESA =========
+  const giftBtn = document.getElementById("giftBtn");
+  const giftOverlay = document.getElementById("giftOverlay");
 
-    if (giftBtn && giftOverlay) {
-      giftBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        giftOverlay.classList.add("show");
-        giftOverlay.setAttribute("aria-hidden", "false");
-      });
+  if (giftBtn && giftOverlay) {
+    giftBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-      giftOverlay.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        giftOverlay.classList.remove("show");
-        giftOverlay.setAttribute("aria-hidden", "true");
-      });
-    }
-  </script>
+      giftOverlay.classList.add("show");
+      giftOverlay.setAttribute("aria-hidden", "false");
+    });
+
+    giftOverlay.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      giftOverlay.classList.remove("show");
+      giftOverlay.setAttribute("aria-hidden", "true");
+    });
+  }
+</script>
 
 </body>
 </html>

@@ -849,3 +849,38 @@ a:active {
 .menuOverlay .closeBtn {
   color: #fff !important;
 }
+
+/* =========================================================
+   FIX iPHONE / SAFARI - ALTURAS Y FULLSCREEN
+   ========================================================= */
+
+html,
+body {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.app,
+.pages {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.page {
+  height: calc((var(--vh, 1vh) * 100) - 56px) !important;
+}
+
+.intro,
+.introVideo {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.invFull {
+  height: calc(var(--vh, 1vh) * 100);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.invFullImg {
+  width: auto !important;
+  max-width: 100vw !important;
+  max-height: calc(var(--vh, 1vh) * 100) !important;
+  object-fit: contain !important;
+}
